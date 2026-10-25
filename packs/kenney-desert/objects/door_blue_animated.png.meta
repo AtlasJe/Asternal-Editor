@@ -1,0 +1,26 @@
+{
+  "name": "door_blue",
+  "label": "控制室门",
+  "frameCount": 2,
+  "animations": [
+    {
+      "name": "closed",
+      "label": "关闭",
+      "frames": [
+        1,
+        0
+      ],
+      "fps": 3
+    },
+    {
+      "name": "open",
+      "label": "打开",
+      "frames": [
+        0,
+        1
+      ],
+      "fps": 3
+    }
+  ],
+  "uuid": "3e5d2022-4510-5771-8261-428b4001b195"
+}

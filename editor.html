@@ -1,0 +1,39 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Builda · Editor</title>
+<link rel="stylesheet" href="editor.css"><link rel="stylesheet" href="editor-overrides.css"><link rel="stylesheet" href="editor-workspace.css">
+</head>
+<body>
+<div class="editor-shell">
+ <header class="editor-topbar">
+  <div class="editor-brand"><a href="index.html" class="back" aria-label="Volver a proyectos">←</a><span class="brand-mark">B</span><button id="projectName" class="project-name project-name-button" title="Renombrar proyecto">Proyecto</button><small class="alpha">ALPHA</small></div>
+  <nav class="top-center" aria-label="Vistas del editor"><button class="mode-button active" data-mode="scene">Escena</button><button class="mode-button" data-mode="logic">Lógica</button><button class="mode-button" data-mode="assets">Recursos</button></nav>
+  <div class="top-right"><span id="saveState" class="save-state" role="status">Sin cambios</span><button id="runButton" class="run-button">▶ Ejecutar</button></div>
+ </header>
+ <main class="editor-body">
+  <aside class="left-panel">
+   <div class="panel-tabs"><button class="panel-tab active" data-panel="scene">Objetos</button><button class="panel-tab" data-panel="nodes">Añadir</button></div>
+   <section class="panel-content" id="scenePanel"><div class="panel-title"><span>ESCENA PRINCIPAL</span><button id="addEntity" class="panel-action" aria-label="Añadir nodo">+</button></div><button class="tree-row" id="selectScene">Ajustes de escena</button><div id="entityList"></div></section>
+   <section class="panel-content hidden" id="nodesPanel"><label class="node-search"><input id="nodeSearch" type="search" placeholder="Buscar nodos" aria-label="Buscar nodos"></label><div id="nodeLibrary" class="node-library"></div></section>
+   <div class="left-footer">Guardado local en este navegador</div>
+  </aside>
+  <section class="stage-area">
+   <div class="stage-toolbar"><strong id="stageLabel">Escena principal</strong><div class="stage-tools"><button id="undo" title="Deshacer (Ctrl+Z)" aria-label="Deshacer">↶</button><button id="redo" title="Rehacer (Ctrl+Shift+Z)" aria-label="Rehacer">↷</button><button id="fit" title="Encuadrar vista (F)">Encuadrar</button><button id="mapTool">Editor de tiles</button></div></div>
+   <div class="stage" id="stage">
+    <div id="sceneView" class="workspace-view"><canvas id="sceneCanvas" width="960" height="540" tabindex="0" aria-label="Escena 2D: arrastra los objetos para moverlos"></canvas></div>
+    <div id="logicView" class="workspace-view graph-view" hidden><div id="graphWorld"><svg id="wires" aria-hidden="true"></svg><div id="graphNodes"></div></div><p id="graphHint" class="view-hint">Añade un evento y una acción. Conecta sus puertos.</p></div>
+    <section id="assetsView" class="workspace-view assets-view" hidden><header><div><h2>Recursos del proyecto</h2><p>Importa imágenes para tus sprites.</p></div><button id="importAsset" class="outline-button">Importar imagen</button></header><div id="assetList"></div><input id="assetInput" type="file" accept="image/png,image/jpeg,image/webp" hidden></section>
+   </div>
+   <footer class="stage-status"><span id="nodeStatus"></span><span class="status-spacer"></span><span id="viewHelp">Arrastra para mover · Supr para eliminar</span></footer>
+  </section>
+  <aside class="right-panel"><div class="inspector-header"><div><span class="eyebrow">INSPECTOR</span><h2 id="inspectorTitle">Escena</h2></div></div><div id="inspector" class="inspector"></div></aside>
+ </main>
+</div>
+<div class="toast" id="toast" role="status"></div>
+<dialog id="nameDialog"><form id="nameForm"><h2>Nombre del proyecto</h2><label>Nombre<input id="renameInput" maxlength="48" required></label><p id="nameError" role="alert"></p><div class="dialog-actions"><button type="button" id="cancelRename">Cancelar</button><button type="submit">Guardar nombre</button></div></form></dialog>
+<dialog id="mapDialog"><header><div><strong>Editor de tiles</strong><small>Guardado por proyecto · El mapa todavía no se dibuja en la vista de juego</small></div><button id="closeMap">Volver a la escena</button></header><iframe id="mapEditor" title="Herramienta de mapas Builda"></iframe></dialog>
+<dialog id="missingDialog"><h2>No se puede abrir el proyecto</h2><p id="missingReason"></p><a href="index.html" class="outline-button">Volver a proyectos</a></dialog>
+<script src="project-store.js"></script><script src="scripts/nodes/builtin.js"></script><script src="engine/runtime/preview.js"></script><script src="editor.js"></script>
+</body></html>

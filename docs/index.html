@@ -1,0 +1,29 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#17191b">
+  <title>Documentación · Builda Engine</title>
+  <style>
+    :root{color-scheme:dark;--bg:#17191b;--panel:#202326;--line:#34383c;--text:#eceeed;--muted:#a1a6a8;--accent:#d6ddd9}*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--text);font:16px/1.65 system-ui,-apple-system,"Segoe UI",sans-serif}.wrap{width:min(860px,calc(100% - 36px));margin:0 auto;padding:38px 0 72px}header{display:flex;align-items:center;justify-content:space-between;gap:20px;border-bottom:1px solid var(--line);padding-bottom:22px}.brand{font-size:15px;font-weight:700;letter-spacing:.02em}.brand span{color:var(--muted);font-weight:500}.back{color:var(--text);text-decoration:none;border:1px solid var(--line);border-radius:8px;padding:8px 12px;font-size:14px}.back:hover{background:#292d30}h1{font-size:clamp(32px,6vw,48px);line-height:1.1;letter-spacing:-.04em;margin:54px 0 12px}.lead{color:var(--muted);font-size:18px;max-width:660px}.badge{display:inline-flex;border:1px solid #555d60;border-radius:99px;padding:3px 10px;color:var(--accent);font-size:12px;font-weight:650;letter-spacing:.06em}.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px;margin-top:34px}.card{border:1px solid var(--line);border-radius:12px;background:var(--panel);padding:20px}.card h2{font-size:17px;margin:0 0 8px}.card p,.card ul{color:var(--muted);margin:0}.card ul{padding-left:20px}.card li+li{margin-top:5px}.wide{grid-column:1/-1}.card a{color:#e3e9e6}.note{border-left:3px solid #717a75;padding:2px 0 2px 14px;color:var(--muted)}code{font: .92em ui-monospace,SFMono-Regular,Consolas,monospace;color:#e2e8e4;background:#2a2e30;padding:2px 5px;border-radius:4px}footer{margin-top:34px;color:var(--muted);font-size:13px}@media(max-width:620px){.grid{grid-template-columns:1fr}.wide{grid-column:auto}header{align-items:flex-start}}
+  </style>
+</head>
+<body>
+  <main class="wrap">
+    <header><div class="brand">BUILDA <span>ENGINE</span></div><a class="back" href="../index.html">Volver a Proyectos</a></header>
+    <h1>Documentación</h1>
+    <p class="lead">Builda es un editor experimental de juegos 2D que funciona en el navegador. Organiza una escena y define comportamientos conectando nodos.</p>
+    <p><span class="badge">ALPHA · v0.1.0</span></p>
+    <section class="grid">
+      <article class="card"><h2>Empezar</h2><p>Abre <a href="../index.html">Proyectos</a>, crea un proyecto y entra al editor. Desde ahí puedes editar la escena, conectar nodos y abrir la herramienta de mapas.</p></article>
+      <article class="card"><h2>Nodos disponibles</h2><ul><li>Eventos: Al iniciar, Cada fotograma, Al pulsar tecla.</li><li>Acciones: Mover objeto, Cambiar propiedad, Condición.</li><li>Conecta la salida de un nodo con la entrada de otro.</li></ul></article>
+      <article class="card"><h2>Guardar</h2><p>Los proyectos se guardan en el almacenamiento local del navegador. Cada dirección —por ejemplo localhost y GitHub Pages— mantiene su propia biblioteca.</p></article>
+      <article class="card"><h2>Imágenes</h2><p>Importa PNG, JPEG o WebP de hasta 2 MB. Las imágenes añadidas pueden convertirse en sprites dentro de la escena.</p></article>
+      <article class="card wide"><h2>Límites actuales</h2><p class="note">Esta versión todavía no exporta proyectos, no ofrece físicas completas ni publica directamente en Builda H5. El mapa se guarda dentro del proyecto, pero aún no se dibuja en la vista previa de juego.</p></article>
+      <article class="card wide"><h2>Desarrollo y contribuciones</h2><p>Para ejecutar Builda localmente, desde la carpeta del repositorio usa <code>python -m http.server 8000 --bind 127.0.0.1</code> y abre <code>http://127.0.0.1:8000/</code>. Consulta el <a href="../README.md">README en GitHub</a> y el detalle de <a href="editor-alpha.md">funciones y límites de la Alpha</a>.</p></article>
+    </section>
+    <footer>Builda Engine · Editor experimental de juegos 2D.</footer>
+  </main>
+</body>
+</html>

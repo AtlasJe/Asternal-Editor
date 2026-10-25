@@ -1,0 +1,27 @@
+{
+  "label": "灰色单开门",
+  "frameCount": 3,
+  "animations": [
+    {
+      "name": "closed",
+      "label": "关闭",
+      "frames": [
+        2,
+        1,
+        0
+      ],
+      "fps": 3
+    },
+    {
+      "name": "open",
+      "label": "打开",
+      "frames": [
+        0,
+        1,
+        2
+      ],
+      "fps": 3
+    }
+  ],
+  "uuid": "e05a57fb-1b2c-5164-9cc5-6fb65aee7de2"
+}

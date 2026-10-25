@@ -1,0 +1,32 @@
+{
+  "name": "gate_orange",
+  "label": "橙色卷帘门",
+  "footprint": [
+    2,
+    1
+  ],
+  "frameCount": 3,
+  "animations": [
+    {
+      "name": "closed",
+      "label": "关闭",
+      "frames": [
+        2,
+        1,
+        0
+      ],
+      "fps": 3
+    },
+    {
+      "name": "open",
+      "label": "打开",
+      "frames": [
+        0,
+        1,
+        2
+      ],
+      "fps": 3
+    }
+  ],
+  "uuid": "b4208406-5091-57e5-b399-b52fc0f6e49c"
+}

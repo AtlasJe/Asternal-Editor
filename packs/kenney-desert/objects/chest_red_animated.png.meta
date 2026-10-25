@@ -1,0 +1,26 @@
+{
+  "name": "chest_red",
+  "label": "红色宝箱",
+  "frameCount": 2,
+  "animations": [
+    {
+      "name": "closed",
+      "label": "关闭",
+      "frames": [
+        1,
+        0
+      ],
+      "fps": 3
+    },
+    {
+      "name": "open",
+      "label": "打开",
+      "frames": [
+        0,
+        1
+      ],
+      "fps": 3
+    }
+  ],
+  "uuid": "70b37e3e-a93d-5817-b7c3-e5a04b93ee57"
+}

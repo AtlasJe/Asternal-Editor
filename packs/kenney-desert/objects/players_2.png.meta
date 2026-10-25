@@ -1,0 +1,30 @@
+{
+  "label": "长发冒险者",
+  "frameCount": 4,
+  "animations": [
+    {
+      "name": "walk",
+      "label": "走动",
+      "frames": [
+        0,
+        1
+      ],
+      "fps": 4
+    },
+    {
+      "name": "jump",
+      "label": "跳起",
+      "frames": [
+        2
+      ]
+    },
+    {
+      "name": "down",
+      "label": "倒地",
+      "frames": [
+        3
+      ]
+    }
+  ],
+  "uuid": "41fa8f2e-2cae-56fd-9c07-04aabc91f0f5"
+}

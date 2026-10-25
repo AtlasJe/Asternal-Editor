@@ -1,0 +1,34 @@
+{
+  "name": "door_grey_double",
+  "label": "灰色双开门",
+  "footprint": [
+    2,
+    1
+  ],
+  "frameCount": 4,
+  "animations": [
+    {
+      "name": "closed",
+      "label": "关闭",
+      "frames": [
+        3,
+        2,
+        1,
+        0
+      ],
+      "fps": 3
+    },
+    {
+      "name": "open",
+      "label": "打开",
+      "frames": [
+        0,
+        1,
+        2,
+        3
+      ],
+      "fps": 3
+    }
+  ],
+  "uuid": "14e99eb1-cb01-5155-af48-ebfdb9c6088c"
+}

@@ -1,0 +1,32 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Builda — Proyectos</title>
+  <link rel="stylesheet" href="dashboard.css" />
+  <link rel="stylesheet" href="dashboard-overrides.css" />
+</head>
+<body>
+  <div class="app-shell">
+    <aside class="sidebar">
+      <div class="brand"><span class="brand-mark">B</span><span>builda</span><span class="brand-muted">engine</span></div>
+      <nav class="main-nav" aria-label="Navegación principal">
+        <a class="nav-item active" href="index.html"><span class="nav-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m4 10 8-6 8 6v9a1 1 0 0 1-1 1h-5v-6h-4v6H5a1 1 0 0 1-1-1z"/></svg></span> Proyectos</a>
+        <a class="nav-item" href="docs/"><span class="nav-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 4.5A2.5 2.5 0 0 1 7.5 2H20v17H7.5A2.5 2.5 0 0 0 5 21.5zM5 4.5v17M8 6h8M8 10h8"/></svg></span> Documentación</a>
+      </nav>
+      <div class="sidebar-bottom"><div class="engine-status"><span class="release-mark">α</span><div><strong>Builda Engine</strong><small>ALPHA · v0.1.0 · H5</small></div></div></div>
+    </aside>
+    <main class="main-content">
+      <section class="hero"><div><h1>Proyectos</h1><p class="hero-copy">Crea, organiza y abre tus juegos 2D desde un solo lugar.</p></div><button class="primary-button" id="newProject"><span>+</span> Nuevo proyecto</button></section>
+      <section class="content-section"><div class="section-heading"><div><h2>Recientes</h2><p id="projectCount">Tus proyectos guardados en este navegador</p></div><label class="search"><span>⌕</span><input id="search" type="search" placeholder="Buscar proyectos" /></label></div><div id="projectGrid" class="project-grid"></div><div id="emptyState" class="empty-state" hidden><div class="empty-icon">◌</div><h3>No hay proyectos todavía</h3><p>Crea tu primer proyecto para empezar a construir.</p><button class="primary-button" id="emptyCreate">Crear proyecto</button></div></section>
+      <p id="dashboardMessage" role="status" hidden></p>
+    </main>
+  </div>
+  <dialog id="projectDialog"><form method="dialog" id="projectForm"><div class="dialog-top"><div><p class="eyebrow" id="dialogEyebrow">NUEVO PROYECTO</p><h2 id="dialogTitle">Empieza algo nuevo</h2></div><button class="close-button" value="cancel" aria-label="Cerrar">×</button></div><label for="projectName">Nombre del proyecto</label><input id="projectName" name="name" value="Mi juego" maxlength="48" autocomplete="off" /><p class="dialog-hint" id="dialogHint">Se guardará localmente en este navegador.</p><div class="dialog-actions"><button class="quiet-button" value="cancel">Cancelar</button><button class="primary-button" id="dialogSubmit" value="default">Crear proyecto</button></div></form></dialog>
+  <script src="project-store.js"></script>
+  <script src="dashboard.js"></script>
+</body>
+</html>
+
+

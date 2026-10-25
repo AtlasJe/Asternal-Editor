@@ -1,0 +1,617 @@
+{
+  "0": [
+    "terrains/ground.png"
+  ],
+  "1": [
+    "terrains/ground.png",
+    "objects/grass_tufts.png"
+  ],
+  "2": [
+    "terrains/ground.png",
+    "objects/flowers.png"
+  ],
+  "3": [
+    "objects/tree_gold_tall.png"
+  ],
+  "4": [
+    "objects/tree_green_tall.png"
+  ],
+  "5": [
+    "objects/tree_round.png"
+  ],
+  "6": [
+    "terrains/forest_green.png"
+  ],
+  "7": [
+    "terrains/forest_green.png"
+  ],
+  "8": [
+    "terrains/forest_green.png"
+  ],
+  "9": [
+    "terrains/forest_gold.png"
+  ],
+  "10": [
+    "terrains/forest_gold.png"
+  ],
+  "11": [
+    "terrains/forest_gold.png"
+  ],
+  "12": [
+    "terrains/ground.png"
+  ],
+  "13": [
+    "terrains/ground.png"
+  ],
+  "14": [
+    "terrains/ground.png"
+  ],
+  "15": [
+    "objects/tree_gold_tall.png"
+  ],
+  "16": [
+    "objects/tree_green_tall.png"
+  ],
+  "17": [
+    "objects/saplings.png"
+  ],
+  "18": [
+    "terrains/forest_green.png"
+  ],
+  "19": [
+    "terrains/forest_green.png"
+  ],
+  "20": [
+    "terrains/forest_green.png"
+  ],
+  "21": [
+    "terrains/forest_gold.png"
+  ],
+  "22": [
+    "terrains/forest_gold.png"
+  ],
+  "23": [
+    "terrains/forest_gold.png"
+  ],
+  "24": [
+    "terrains/ground.png"
+  ],
+  "25": [
+    "terrains/ground.png"
+  ],
+  "26": [
+    "terrains/ground.png"
+  ],
+  "27": [
+    "objects/tree_gold_small.png"
+  ],
+  "28": [
+    "objects/tree_green_small.png"
+  ],
+  "29": [
+    "objects/mushrooms.png"
+  ],
+  "30": [
+    "terrains/forest_green.png"
+  ],
+  "31": [
+    "terrains/forest_green.png"
+  ],
+  "32": [
+    "terrains/forest_green.png"
+  ],
+  "33": [
+    "terrains/forest_gold.png"
+  ],
+  "34": [
+    "terrains/forest_gold.png"
+  ],
+  "35": [
+    "terrains/forest_gold.png"
+  ],
+  "36": [
+    "terrains/ground.png"
+  ],
+  "37": [
+    "terrains/ground.png"
+  ],
+  "38": [
+    "terrains/ground.png"
+  ],
+  "39": [
+    "terrains/ground.png"
+  ],
+  "40": [
+    "terrains/ground.png"
+  ],
+  "41": [
+    "terrains/ground.png"
+  ],
+  "42": [
+    "terrains/ground.png"
+  ],
+  "43": [
+    "objects/stone_path.png"
+  ],
+  "44": [
+    "terrains/wood_fence.png"
+  ],
+  "45": [
+    "terrains/wood_fence.png"
+  ],
+  "46": [
+    "terrains/wood_fence.png"
+  ],
+  "47": [
+    "terrains/wood_fence.png"
+  ],
+  "48": [
+    "objects/house_slate_wood_arched.png",
+    "objects/house_slate_wood_square.png",
+    "objects/house_slate_wood_wide.png",
+    "objects/house_slate_wood_open.png",
+    "objects/house_slate_wood_gable.png",
+    "objects/house_slate_stone_arched.png",
+    "objects/house_slate_stone_square.png",
+    "objects/house_slate_stone_wide.png",
+    "objects/house_slate_stone_open.png",
+    "objects/house_slate_stone_gable.png",
+    "objects/house_slate_dormer.png",
+    "objects/house_wide_wood.png",
+    "objects/house_wide_stone.png"
+  ],
+  "49": [
+    "objects/house_slate_wood_arched.png",
+    "objects/house_slate_wood_square.png",
+    "objects/house_slate_wood_wide.png",
+    "objects/house_slate_wood_open.png",
+    "objects/house_slate_wood_gable.png",
+    "objects/house_slate_stone_arched.png",
+    "objects/house_slate_stone_square.png",
+    "objects/house_slate_stone_wide.png",
+    "objects/house_slate_stone_open.png",
+    "objects/house_slate_stone_gable.png",
+    "objects/house_wide_wood.png",
+    "objects/house_wide_stone.png"
+  ],
+  "50": [
+    "objects/house_slate_wood_arched.png",
+    "objects/house_slate_wood_square.png",
+    "objects/house_slate_wood_wide.png",
+    "objects/house_slate_wood_open.png",
+    "objects/house_slate_wood_gable.png",
+    "objects/house_slate_stone_arched.png",
+    "objects/house_slate_stone_square.png",
+    "objects/house_slate_stone_wide.png",
+    "objects/house_slate_stone_open.png",
+    "objects/house_slate_stone_gable.png",
+    "objects/house_slate_dormer.png",
+    "objects/house_wide_wood.png",
+    "objects/house_wide_stone.png"
+  ],
+  "51": [
+    "objects/house_slate_dormer.png"
+  ],
+  "52": [
+    "objects/house_red_wood_arched.png",
+    "objects/house_red_wood_square.png",
+    "objects/house_red_wood_wide.png",
+    "objects/house_red_wood_open.png",
+    "objects/house_red_wood_gable.png",
+    "objects/house_red_stone_arched.png",
+    "objects/house_red_stone_square.png",
+    "objects/house_red_stone_wide.png",
+    "objects/house_red_stone_open.png",
+    "objects/house_red_stone_gable.png",
+    "objects/house_red_dormer.png"
+  ],
+  "53": [
+    "objects/house_red_wood_arched.png",
+    "objects/house_red_wood_square.png",
+    "objects/house_red_wood_wide.png",
+    "objects/house_red_wood_open.png",
+    "objects/house_red_wood_gable.png",
+    "objects/house_red_stone_arched.png",
+    "objects/house_red_stone_square.png",
+    "objects/house_red_stone_wide.png",
+    "objects/house_red_stone_open.png",
+    "objects/house_red_stone_gable.png"
+  ],
+  "54": [
+    "objects/house_red_wood_arched.png",
+    "objects/house_red_wood_square.png",
+    "objects/house_red_wood_wide.png",
+    "objects/house_red_wood_open.png",
+    "objects/house_red_wood_gable.png",
+    "objects/house_red_stone_arched.png",
+    "objects/house_red_stone_square.png",
+    "objects/house_red_stone_wide.png",
+    "objects/house_red_stone_open.png",
+    "objects/house_red_stone_gable.png",
+    "objects/house_red_dormer.png"
+  ],
+  "55": [
+    "objects/house_red_dormer.png"
+  ],
+  "56": [
+    "terrains/wood_fence.png"
+  ],
+  "57": [
+    "objects/cart.png"
+  ],
+  "58": [
+    "terrains/wood_fence.png"
+  ],
+  "59": [
+    "terrains/wood_fence.png"
+  ],
+  "60": [
+    "objects/house_slate_wood_arched.png",
+    "objects/house_slate_wood_square.png",
+    "objects/house_slate_wood_wide.png",
+    "objects/house_slate_wood_open.png",
+    "objects/house_slate_wood_gable.png",
+    "objects/house_slate_stone_arched.png",
+    "objects/house_slate_stone_square.png",
+    "objects/house_slate_stone_wide.png",
+    "objects/house_slate_stone_open.png",
+    "objects/house_slate_stone_gable.png",
+    "objects/house_slate_dormer.png",
+    "objects/house_wide_wood.png",
+    "objects/house_wide_stone.png"
+  ],
+  "61": [
+    "objects/house_slate_wood_arched.png",
+    "objects/house_slate_wood_square.png",
+    "objects/house_slate_wood_wide.png",
+    "objects/house_slate_wood_open.png",
+    "objects/house_slate_stone_arched.png",
+    "objects/house_slate_stone_square.png",
+    "objects/house_slate_stone_wide.png",
+    "objects/house_slate_stone_open.png",
+    "objects/house_slate_dormer.png",
+    "objects/house_wide_wood.png",
+    "objects/house_wide_stone.png"
+  ],
+  "62": [
+    "objects/house_slate_wood_arched.png",
+    "objects/house_slate_wood_square.png",
+    "objects/house_slate_wood_wide.png",
+    "objects/house_slate_wood_open.png",
+    "objects/house_slate_wood_gable.png",
+    "objects/house_slate_stone_arched.png",
+    "objects/house_slate_stone_square.png",
+    "objects/house_slate_stone_wide.png",
+    "objects/house_slate_stone_open.png",
+    "objects/house_slate_stone_gable.png",
+    "objects/house_slate_dormer.png",
+    "objects/house_wide_wood.png",
+    "objects/house_wide_stone.png"
+  ],
+  "63": [
+    "objects/house_slate_wood_gable.png",
+    "objects/house_slate_stone_gable.png",
+    "objects/house_wide_wood.png",
+    "objects/house_wide_stone.png"
+  ],
+  "64": [
+    "objects/house_red_wood_arched.png",
+    "objects/house_red_wood_square.png",
+    "objects/house_red_wood_wide.png",
+    "objects/house_red_wood_open.png",
+    "objects/house_red_wood_gable.png",
+    "objects/house_red_stone_arched.png",
+    "objects/house_red_stone_square.png",
+    "objects/house_red_stone_wide.png",
+    "objects/house_red_stone_open.png",
+    "objects/house_red_stone_gable.png",
+    "objects/house_red_dormer.png"
+  ],
+  "65": [
+    "objects/house_red_wood_arched.png",
+    "objects/house_red_wood_square.png",
+    "objects/house_red_wood_wide.png",
+    "objects/house_red_wood_open.png",
+    "objects/house_red_stone_arched.png",
+    "objects/house_red_stone_square.png",
+    "objects/house_red_stone_wide.png",
+    "objects/house_red_stone_open.png",
+    "objects/house_red_dormer.png"
+  ],
+  "66": [
+    "objects/house_red_wood_arched.png",
+    "objects/house_red_wood_square.png",
+    "objects/house_red_wood_wide.png",
+    "objects/house_red_wood_open.png",
+    "objects/house_red_wood_gable.png",
+    "objects/house_red_stone_arched.png",
+    "objects/house_red_stone_square.png",
+    "objects/house_red_stone_wide.png",
+    "objects/house_red_stone_open.png",
+    "objects/house_red_stone_gable.png",
+    "objects/house_red_dormer.png"
+  ],
+  "67": [
+    "objects/house_red_wood_gable.png",
+    "objects/house_red_stone_gable.png"
+  ],
+  "68": [
+    "terrains/wood_fence.png"
+  ],
+  "69": [
+    "terrains/wood_fence.png"
+  ],
+  "70": [
+    "terrains/wood_fence.png"
+  ],
+  "71": [
+    "terrains/wood_fence.png"
+  ],
+  "72": [
+    "objects/house_wide_wood.png"
+  ],
+  "73": [
+    "objects/house_wide_wood.png"
+  ],
+  "74": [
+    "objects/house_slate_wood_open.png",
+    "objects/house_red_wood_open.png"
+  ],
+  "75": [
+    "objects/house_slate_wood_arched.png",
+    "objects/house_slate_wood_square.png",
+    "objects/house_slate_wood_wide.png",
+    "objects/house_slate_wood_open.png",
+    "objects/house_slate_wood_gable.png",
+    "objects/house_slate_dormer.png",
+    "objects/house_red_wood_arched.png",
+    "objects/house_red_wood_square.png",
+    "objects/house_red_wood_wide.png",
+    "objects/house_red_wood_open.png",
+    "objects/house_red_wood_gable.png",
+    "objects/house_red_dormer.png",
+    "objects/house_wide_wood.png"
+  ],
+  "76": [
+    "objects/house_wide_stone.png"
+  ],
+  "77": [
+    "objects/house_wide_stone.png"
+  ],
+  "78": [
+    "objects/house_slate_stone_open.png",
+    "objects/house_red_stone_open.png"
+  ],
+  "79": [
+    "objects/house_slate_stone_arched.png",
+    "objects/house_slate_stone_square.png",
+    "objects/house_slate_stone_wide.png",
+    "objects/house_slate_stone_open.png",
+    "objects/house_slate_stone_gable.png",
+    "objects/house_red_stone_arched.png",
+    "objects/house_red_stone_square.png",
+    "objects/house_red_stone_wide.png",
+    "objects/house_red_stone_open.png",
+    "objects/house_red_stone_gable.png",
+    "objects/house_wide_stone.png"
+  ],
+  "80": [
+    "terrains/wood_fence.png"
+  ],
+  "81": [
+    "terrains/wood_fence.png"
+  ],
+  "82": [
+    "terrains/wood_fence.png"
+  ],
+  "83": [
+    "objects/sign.png"
+  ],
+  "84": [
+    "objects/house_slate_wood_arched.png",
+    "objects/house_slate_wood_square.png",
+    "objects/house_slate_wood_wide.png",
+    "objects/house_slate_wood_open.png",
+    "objects/house_slate_wood_gable.png",
+    "objects/house_slate_dormer.png",
+    "objects/house_red_wood_arched.png",
+    "objects/house_red_wood_square.png",
+    "objects/house_red_wood_wide.png",
+    "objects/house_red_wood_open.png",
+    "objects/house_red_wood_gable.png",
+    "objects/house_red_dormer.png"
+  ],
+  "85": [
+    "objects/house_slate_wood_arched.png",
+    "objects/house_slate_wood_gable.png",
+    "objects/house_slate_dormer.png",
+    "objects/house_red_wood_arched.png",
+    "objects/house_red_wood_gable.png",
+    "objects/house_red_dormer.png",
+    "objects/house_wide_wood.png"
+  ],
+  "86": [
+    "objects/house_slate_wood_square.png",
+    "objects/house_red_wood_square.png"
+  ],
+  "87": [
+    "objects/house_slate_wood_wide.png",
+    "objects/house_red_wood_wide.png"
+  ],
+  "88": [
+    "objects/house_slate_stone_arched.png",
+    "objects/house_slate_stone_square.png",
+    "objects/house_slate_stone_wide.png",
+    "objects/house_slate_stone_open.png",
+    "objects/house_slate_stone_gable.png",
+    "objects/house_red_stone_arched.png",
+    "objects/house_red_stone_square.png",
+    "objects/house_red_stone_wide.png",
+    "objects/house_red_stone_open.png",
+    "objects/house_red_stone_gable.png"
+  ],
+  "89": [
+    "objects/house_slate_stone_arched.png",
+    "objects/house_slate_stone_gable.png",
+    "objects/house_red_stone_arched.png",
+    "objects/house_red_stone_gable.png",
+    "objects/house_wide_stone.png"
+  ],
+  "90": [
+    "objects/house_slate_stone_square.png",
+    "objects/house_red_stone_square.png"
+  ],
+  "91": [
+    "objects/house_slate_stone_wide.png",
+    "objects/house_red_stone_wide.png"
+  ],
+  "92": [
+    "objects/soil_pile.png"
+  ],
+  "93": [
+    "objects/coin.png"
+  ],
+  "94": [
+    "objects/beehive.png"
+  ],
+  "95": [
+    "objects/target.png"
+  ],
+  "96": [
+    "objects/castle_courtyard.png",
+    "terrains/castle_construction.png"
+  ],
+  "97": [
+    "objects/castle_courtyard.png",
+    "terrains/castle_construction.png"
+  ],
+  "98": [
+    "objects/castle_courtyard.png",
+    "terrains/castle_construction.png"
+  ],
+  "99": [
+    "objects/castle_gate.png",
+    "objects/castle_gate_open.png",
+    "objects/castle_wall.png",
+    "terrains/castle_construction.png"
+  ],
+  "100": [
+    "objects/castle_wall.png",
+    "terrains/castle_construction.png"
+  ],
+  "101": [
+    "objects/castle_gate.png",
+    "objects/castle_gate_open.png",
+    "objects/castle_wall.png",
+    "terrains/castle_construction.png"
+  ],
+  "102": [
+    "objects/castle_watchtower.png",
+    "terrains/castle_construction.png"
+  ],
+  "103": [
+    "objects/castle_watchtower.png",
+    "terrains/castle_construction.png"
+  ],
+  "104": [
+    "objects/well.png"
+  ],
+  "105": [
+    "objects/bomb.png"
+  ],
+  "106": [
+    "objects/log.png"
+  ],
+  "107": [
+    "objects/chest.png"
+  ],
+  "108": [
+    "objects/castle_courtyard.png",
+    "terrains/castle_construction.png"
+  ],
+  "109": [
+    "objects/castle_courtyard.png",
+    "terrains/castle_construction.png"
+  ],
+  "110": [
+    "objects/castle_courtyard.png",
+    "terrains/castle_construction.png"
+  ],
+  "111": [
+    "objects/castle_gate.png",
+    "terrains/castle_construction.png"
+  ],
+  "112": [
+    "objects/castle_gate.png",
+    "terrains/castle_construction.png"
+  ],
+  "113": [
+    "objects/castle_gate_open.png",
+    "terrains/castle_construction.png"
+  ],
+  "114": [
+    "objects/castle_gate_open.png",
+    "terrains/castle_construction.png"
+  ],
+  "115": [
+    "objects/pickaxe.png"
+  ],
+  "116": [
+    "objects/pitchfork.png"
+  ],
+  "117": [
+    "objects/key.png"
+  ],
+  "118": [
+    "objects/bow.png"
+  ],
+  "119": [
+    "objects/arrow.png"
+  ],
+  "120": [
+    "objects/castle_courtyard.png",
+    "terrains/castle_construction.png"
+  ],
+  "121": [
+    "objects/castle_courtyard.png",
+    "terrains/castle_construction.png"
+  ],
+  "122": [
+    "objects/castle_courtyard.png",
+    "terrains/castle_construction.png"
+  ],
+  "123": [
+    "objects/castle_gate.png",
+    "objects/castle_gate_open.png",
+    "terrains/castle_construction.png"
+  ],
+  "124": [
+    "objects/castle_gate.png",
+    "objects/castle_gate_open.png",
+    "terrains/castle_construction.png"
+  ],
+  "125": [
+    "objects/castle_courtyard.png",
+    "terrains/castle_construction.png"
+  ],
+  "126": [
+    "objects/castle_wall.png",
+    "objects/castle_watchtower.png",
+    "terrains/castle_construction.png"
+  ],
+  "127": [
+    "objects/axe.png"
+  ],
+  "128": [
+    "objects/pan.png"
+  ],
+  "129": [
+    "objects/sickle.png"
+  ],
+  "130": [
+    "objects/bucket_empty.png"
+  ],
+  "131": [
+    "objects/bucket_water.png"
+  ]
+}

@@ -1,0 +1,30 @@
+{
+  "label": "蓝角巨兽",
+  "frameCount": 4,
+  "animations": [
+    {
+      "name": "walk",
+      "label": "走动",
+      "frames": [
+        0,
+        1
+      ],
+      "fps": 4
+    },
+    {
+      "name": "jump",
+      "label": "跳起",
+      "frames": [
+        2
+      ]
+    },
+    {
+      "name": "down",
+      "label": "倒地",
+      "frames": [
+        3
+      ]
+    }
+  ],
+  "uuid": "33e6b5e9-bf1a-5d20-b15b-fe447e720ccd"
+}

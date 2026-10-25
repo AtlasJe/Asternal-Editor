@@ -1,0 +1,30 @@
+{
+  "label": "青色甲虫",
+  "frameCount": 4,
+  "animations": [
+    {
+      "name": "walk",
+      "label": "走动",
+      "frames": [
+        0,
+        1
+      ],
+      "fps": 4
+    },
+    {
+      "name": "jump",
+      "label": "跳起",
+      "frames": [
+        2
+      ]
+    },
+    {
+      "name": "down",
+      "label": "倒地",
+      "frames": [
+        3
+      ]
+    }
+  ],
+  "uuid": "5f4af6b6-eee6-5fe4-9f08-7cd32f6d82e2"
+}

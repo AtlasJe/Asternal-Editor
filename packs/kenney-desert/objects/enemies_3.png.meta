@@ -1,0 +1,30 @@
+{
+  "label": "火焰怪",
+  "frameCount": 4,
+  "animations": [
+    {
+      "name": "walk",
+      "label": "走动",
+      "frames": [
+        0,
+        1
+      ],
+      "fps": 4
+    },
+    {
+      "name": "jump",
+      "label": "跳起",
+      "frames": [
+        2
+      ]
+    },
+    {
+      "name": "down",
+      "label": "倒地",
+      "frames": [
+        3
+      ]
+    }
+  ],
+  "uuid": "e271f04d-c98e-53d8-b548-e2affcbbe727"
+}

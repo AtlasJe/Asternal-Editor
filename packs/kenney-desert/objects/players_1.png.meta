@@ -1,0 +1,30 @@
+{
+  "label": "刺发冒险者",
+  "frameCount": 4,
+  "animations": [
+    {
+      "name": "walk",
+      "label": "走动",
+      "frames": [
+        0,
+        1
+      ],
+      "fps": 4
+    },
+    {
+      "name": "jump",
+      "label": "跳起",
+      "frames": [
+        2
+      ]
+    },
+    {
+      "name": "down",
+      "label": "倒地",
+      "frames": [
+        3
+      ]
+    }
+  ],
+  "uuid": "5510c3ed-6c6a-5a6f-9e9f-6323837d9782"
+}

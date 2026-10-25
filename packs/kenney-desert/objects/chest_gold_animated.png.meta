@@ -1,0 +1,26 @@
+{
+  "name": "chest_gold",
+  "label": "金色宝箱",
+  "frameCount": 2,
+  "animations": [
+    {
+      "name": "closed",
+      "label": "关闭",
+      "frames": [
+        1,
+        0
+      ],
+      "fps": 3
+    },
+    {
+      "name": "open",
+      "label": "打开",
+      "frames": [
+        0,
+        1
+      ],
+      "fps": 3
+    }
+  ],
+  "uuid": "6d618694-104d-5ce8-93a8-fb3a10b8be34"
+}

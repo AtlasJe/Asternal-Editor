@@ -1,0 +1,512 @@
+{
+  "format": "tilemap-ui",
+  "version": 1,
+  "name": "SAMPLE B",
+  "width": 920,
+  "height": 515,
+  "sizePreset": "custom",
+  "background": "#f3cdac",
+  "layers": [
+    {
+      "id": "sample-b",
+      "name": "SAMPLE B",
+      "visible": true,
+      "children": [
+        {
+          "uuid": "4706143b-1da1-4206-850a-e339298d4660",
+          "type": "image",
+          "id": "kenney-desert/badge_purple",
+          "x": 270,
+          "y": 126,
+          "width": 32,
+          "height": 32
+        },
+        {
+          "uuid": "4573abbb-3798-4ddc-85bd-3ade95fe11fb",
+          "type": "image",
+          "id": "kenney-desert/badge_gold",
+          "x": 332,
+          "y": 120,
+          "width": 32,
+          "height": 32
+        },
+        {
+          "uuid": "acf8e2ac-e8b4-4753-aa16-3fa70695f365",
+          "type": "image",
+          "id": "kenney-desert/skull_small",
+          "x": 275,
+          "y": 171,
+          "width": 34,
+          "height": 34
+        },
+        {
+          "uuid": "9d540dc8-44ed-46e9-8e2c-ec6401d5e5fb",
+          "type": "image",
+          "id": "kenney-desert/skull_large",
+          "x": 328,
+          "y": 165,
+          "width": 40,
+          "height": 40
+        },
+        {
+          "uuid": "f3c317d1-7f53-4c16-b682-a4e95b7a16d9",
+          "type": "text",
+          "id": "kenney-desert/desert-shadow",
+          "x": 242,
+          "y": 248,
+          "width": 70,
+          "height": 26,
+          "text": "100%",
+          "fontSize": 16,
+          "color": "#ffffff",
+          "align": "left",
+          "overflow": "clip",
+          "letterSpacing": -1
+        },
+        {
+          "uuid": "62b2f9c5-254a-490b-a906-743e32a3a1f7",
+          "type": "image",
+          "id": "kenney-desert/panel_gold",
+          "x": 402,
+          "y": 76,
+          "width": 94,
+          "height": 94,
+          "nineSliceEnabled": true,
+          "nineSlice": [
+            8,
+            8,
+            8,
+            8
+          ]
+        },
+        {
+          "uuid": "f28fe65d-35ca-4f7d-8b5a-fb8087c7e4d2",
+          "type": "image",
+          "id": "kenney-desert/cross_small",
+          "x": 398,
+          "y": 108,
+          "width": 12,
+          "height": 12
+        },
+        {
+          "uuid": "610baa78-7fb5-411d-9e3b-7e4a9733c7c6",
+          "type": "image",
+          "id": "kenney-desert/cross_small",
+          "x": 488,
+          "y": 108,
+          "width": 12,
+          "height": 12
+        },
+        {
+          "uuid": "eb329937-8942-48c6-8f39-3e930cce3188",
+          "type": "image",
+          "id": "kenney-desert/arrow_up",
+          "x": 433,
+          "y": 88,
+          "width": 28,
+          "height": 28
+        },
+        {
+          "uuid": "ef1e0636-3a30-4ee3-a17f-7b565b6371eb",
+          "type": "image",
+          "id": "kenney-desert/skull_small",
+          "x": 426,
+          "y": 126,
+          "width": 22,
+          "height": 22
+        },
+        {
+          "uuid": "7a993a1f-6803-48b5-b8db-4eea50008a0e",
+          "type": "image",
+          "id": "kenney-desert/panel_round_gold",
+          "x": 442,
+          "y": 188,
+          "width": 92,
+          "height": 92
+        },
+        {
+          "uuid": "68bcba1d-df9a-43e3-b9e2-bf41d3535c1b",
+          "type": "image",
+          "id": "kenney-desert/crosshair_01",
+          "x": 463,
+          "y": 209,
+          "width": 50,
+          "height": 50
+        },
+        {
+          "uuid": "730cce9a-6122-4089-902c-129eab073c68",
+          "type": "image",
+          "id": "kenney-desert/pointer_small",
+          "x": 451,
+          "y": 222,
+          "width": 18,
+          "height": 18
+        },
+        {
+          "uuid": "6d8a6dc2-e159-4922-808d-a54d3de4967d",
+          "type": "image",
+          "id": "kenney-desert/pointer_small",
+          "x": 507,
+          "y": 222,
+          "width": 18,
+          "height": 18
+        },
+        {
+          "uuid": "4ba4e8d2-e444-49e2-9330-9ae63529ec0a",
+          "type": "image",
+          "id": "kenney-desert/pointer_small",
+          "x": 479,
+          "y": 252,
+          "width": 18,
+          "height": 18
+        },
+        {
+          "uuid": "d8c446b3-a77c-4ccd-af1e-5e1b862da7b4",
+          "type": "image",
+          "id": "kenney-desert/panel_blue",
+          "x": 571,
+          "y": 115,
+          "width": 164,
+          "height": 134,
+          "nineSliceEnabled": true,
+          "nineSlice": [
+            20,
+            20,
+            20,
+            20
+          ]
+        },
+        {
+          "uuid": "85134575-e934-4f9f-9ace-0a99142543ff",
+          "type": "image",
+          "id": "kenney-desert/projectile",
+          "x": 592,
+          "y": 146,
+          "width": 28,
+          "height": 28
+        },
+        {
+          "uuid": "7ec994c5-37ef-4d27-9ad1-c536f9fbc9ec",
+          "type": "image",
+          "id": "kenney-desert/bullet",
+          "x": 638,
+          "y": 146,
+          "width": 28,
+          "height": 28
+        },
+        {
+          "uuid": "2c4846ab-61cb-419f-a9fb-8e096f3ec6b3",
+          "type": "image",
+          "id": "kenney-desert/projectile",
+          "x": 592,
+          "y": 184,
+          "width": 28,
+          "height": 28
+        },
+        {
+          "uuid": "4d0673b0-1378-4e2d-9c9e-97d04be3353b",
+          "type": "image",
+          "id": "kenney-desert/bullet",
+          "x": 638,
+          "y": 184,
+          "width": 28,
+          "height": 28
+        },
+        {
+          "uuid": "a305e358-9ce5-4035-ac95-0a269dff79bd",
+          "type": "image",
+          "id": "kenney-desert/skull_small",
+          "x": 682,
+          "y": 177,
+          "width": 28,
+          "height": 28
+        },
+        {
+          "uuid": "407d69a0-0c5f-45b5-a95d-e5c6e67fe348",
+          "type": "image",
+          "id": "kenney-desert/panel_red_inset",
+          "x": 306,
+          "y": 319,
+          "width": 282,
+          "height": 105,
+          "nineSliceEnabled": true,
+          "nineSlice": [
+            8,
+            8,
+            8,
+            8
+          ]
+        },
+        {
+          "uuid": "81813a22-0526-4ae6-a080-2fda8f2cbc47",
+          "type": "text",
+          "id": "kenney-desert/desert-shadow",
+          "x": 326,
+          "y": 344,
+          "width": 242,
+          "height": 28,
+          "text": "YOU WILL NEVER",
+          "fontSize": 16,
+          "color": "#ffffff",
+          "align": "center",
+          "overflow": "clip",
+          "letterSpacing": -1
+        },
+        {
+          "uuid": "d4705c7e-2c15-4971-9508-4c8ae515aeab",
+          "type": "text",
+          "id": "kenney-desert/desert-shadow",
+          "x": 326,
+          "y": 374,
+          "width": 242,
+          "height": 28,
+          "text": "DEFEAT ME",
+          "fontSize": 16,
+          "color": "#ffffff",
+          "align": "center",
+          "overflow": "clip",
+          "letterSpacing": -1
+        },
+        {
+          "uuid": "09e01575-ba4b-4a6e-bfbb-f8e68ad4d011",
+          "type": "image",
+          "id": "kenney-desert/button_red_wide_1",
+          "x": 638,
+          "y": 274,
+          "width": 134,
+          "height": 38,
+          "nineSliceEnabled": true,
+          "nineSlice": [
+            4,
+            4,
+            4,
+            4
+          ]
+        },
+        {
+          "uuid": "7f49e688-4322-4a9a-9a93-254261f53dea",
+          "type": "text",
+          "id": "kenney-desert/desert-shadow",
+          "x": 650,
+          "y": 281,
+          "width": 110,
+          "height": 22,
+          "text": "START RUN",
+          "fontSize": 16,
+          "color": "#ffffff",
+          "align": "center",
+          "overflow": "clip",
+          "letterSpacing": -1
+        },
+        {
+          "uuid": "bb714b76-6a5d-4a33-84e5-789000ca4349",
+          "type": "image",
+          "id": "kenney-desert/button_purple_wide_1",
+          "x": 638,
+          "y": 322,
+          "width": 134,
+          "height": 38,
+          "nineSliceEnabled": true,
+          "nineSlice": [
+            4,
+            4,
+            4,
+            4
+          ]
+        },
+        {
+          "uuid": "c6aed05b-629b-497b-bb28-22e99268a65e",
+          "type": "text",
+          "id": "kenney-desert/desert-shadow",
+          "x": 650,
+          "y": 329,
+          "width": 110,
+          "height": 22,
+          "text": "OPTIONS",
+          "fontSize": 16,
+          "color": "#242632",
+          "align": "center",
+          "overflow": "clip",
+          "letterSpacing": -1
+        },
+        {
+          "uuid": "6838281b-4f81-4ddd-968d-c76fea396e79",
+          "type": "image",
+          "id": "kenney-desert/button_purple_wide_1",
+          "x": 638,
+          "y": 370,
+          "width": 134,
+          "height": 38,
+          "nineSliceEnabled": true,
+          "nineSlice": [
+            4,
+            4,
+            4,
+            4
+          ]
+        },
+        {
+          "uuid": "deaf9726-38ed-480e-a5d3-e51f632f6255",
+          "type": "text",
+          "id": "kenney-desert/desert-shadow",
+          "x": 650,
+          "y": 377,
+          "width": 110,
+          "height": 22,
+          "text": "CREDITS",
+          "fontSize": 16,
+          "color": "#242632",
+          "align": "center",
+          "overflow": "clip",
+          "letterSpacing": -1
+        },
+        {
+          "uuid": "5a636c23-fd94-4f03-a77e-c361190287d4",
+          "type": "image",
+          "id": "kenney-desert/pointer_small",
+          "x": 762,
+          "y": 281,
+          "width": 20,
+          "height": 20
+        },
+        {
+          "uuid": "a17fed99df7143c3b9a72b0676062b0a",
+          "type": "image",
+          "id": "kenney-desert/bar_empty_small",
+          "x": 132,
+          "y": 248,
+          "width": 102,
+          "height": 22,
+          "nineSliceEnabled": true,
+          "nineSlice": [
+            7,
+            7,
+            7,
+            7
+          ],
+          "trimTransparent": true
+        },
+        {
+          "uuid": "d91748b948494444a7a8239a239ea58e",
+          "type": "image",
+          "id": "kenney-desert/bar_empty_small",
+          "x": 132,
+          "y": 282,
+          "width": 126,
+          "height": 22,
+          "nineSliceEnabled": true,
+          "nineSlice": [
+            7,
+            7,
+            7,
+            7
+          ],
+          "trimTransparent": true
+        },
+        {
+          "uuid": "7964d9e1790142dc920ce299f3abc366",
+          "type": "image",
+          "id": "kenney-desert/bar_blue_small",
+          "x": 132,
+          "y": 282,
+          "width": 70,
+          "height": 22,
+          "nineSliceEnabled": true,
+          "nineSlice": [
+            7,
+            7,
+            7,
+            7
+          ],
+          "trimTransparent": true
+        },
+        {
+          "uuid": "c2e5e96cde5f491187a1da2d0f2d4b90",
+          "type": "image",
+          "id": "kenney-desert/bar_empty_small",
+          "x": 132,
+          "y": 313,
+          "width": 126,
+          "height": 22,
+          "nineSliceEnabled": true,
+          "nineSlice": [
+            7,
+            7,
+            7,
+            7
+          ],
+          "trimTransparent": true
+        },
+        {
+          "uuid": "d2da183e26d040eb93b35e4a7231fd43",
+          "type": "image",
+          "id": "kenney-desert/bar_blue_small",
+          "x": 132,
+          "y": 313,
+          "width": 88,
+          "height": 22,
+          "nineSliceEnabled": true,
+          "nineSlice": [
+            7,
+            7,
+            7,
+            7
+          ],
+          "trimTransparent": true
+        },
+        {
+          "uuid": "e5eaf21f-b89e-409f-af8c-f9d407c16a6a",
+          "type": "image",
+          "id": "kenney-desert/bar_red_small",
+          "x": 132,
+          "y": 248,
+          "width": 34,
+          "height": 22,
+          "nineSliceEnabled": true,
+          "nineSlice": [
+            7,
+            7,
+            7,
+            7
+          ],
+          "trimTransparent": true
+        },
+        {
+          "uuid": "dc53b33e-74f6-4ebf-b98b-8a724f21fb2e",
+          "type": "image",
+          "id": "kenney-desert/bar_red_small",
+          "x": 166,
+          "y": 248,
+          "width": 34,
+          "height": 22,
+          "nineSliceEnabled": true,
+          "nineSlice": [
+            7,
+            7,
+            7,
+            7
+          ],
+          "trimTransparent": true
+        },
+        {
+          "uuid": "f1fc9332-ca99-4689-975f-408b5134b898",
+          "type": "image",
+          "id": "kenney-desert/bar_red_small",
+          "x": 200,
+          "y": 248,
+          "width": 34,
+          "height": 22,
+          "nineSliceEnabled": true,
+          "nineSlice": [
+            7,
+            7,
+            7,
+            7
+          ],
+          "trimTransparent": true
+        }
+      ]
+    }
+  ],
+  "activeLayer": 0
+}

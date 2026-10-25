@@ -1,0 +1,7 @@
+{
+  "format": "builda-publish",
+  "version": 1,
+  "client": { "engine": "h5", "entry": "build/index.html" },
+  "assets": { "base": "assets", "include": ["images", "audio", "fonts", "tilemaps", "data"] },
+  "multiplayer": { "enabled": false }
+}

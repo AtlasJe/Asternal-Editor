@@ -1,0 +1,31 @@
+{
+  "name": "portal",
+  "label": "旋涡传送阵",
+  "frameCount": 2,
+  "animations": [
+    {
+      "name": "active",
+      "label": "启动",
+      "frames": [
+        0
+      ]
+    },
+    {
+      "name": "inactive",
+      "label": "关闭",
+      "frames": [
+        1
+      ]
+    },
+    {
+      "name": "cycle",
+      "label": "闪烁",
+      "frames": [
+        0,
+        1
+      ],
+      "fps": 3
+    }
+  ],
+  "uuid": "56343ef8-f8dc-56d7-a01d-839ad1f83069"
+}
