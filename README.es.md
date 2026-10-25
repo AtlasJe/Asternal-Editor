@@ -1,10 +1,10 @@
-# Builda Engine 2D
+# Asternal Editor 2D
 
-La entrada de la aplicación es index.html. El listado empieza vacío; crea un
+Asternal Editor es un editor experimental de juegos 2D. La entrada de la aplicación es index.html. El listado empieza vacío; crea un
 proyecto para entrar al editor de escenas, lógica y recursos.
 Funciones actuales y límites: [Editor Alpha](docs/editor-alpha.md).
 
-Editor web de mapas y base para un motor de juegos 2D compatible con Builda H5.
+Asternal Editor es un editor experimental de juegos 2D. Incluye una herramienta de mapas basada en el editor de Builda; la publicación en Builda H5 todavía no está implementada.
 
 ## Abrir sin servidor
 

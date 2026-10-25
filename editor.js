@@ -298,7 +298,7 @@ function assets() {
   }
 }
 function refresh() {
-  $('#projectName').textContent=project.name;document.title=project.name+' · Builda';
+  $('#projectName').textContent=project.name;document.title=project.name+' · Asternal Editor';
   const objects=project.nodes.filter(isObject).length,connections=project.connections.length;
   $('#nodeStatus').textContent=objects+(objects===1?' objeto':' objetos')+' · '+connections+(connections===1?' conexión':' conexiones');
   $('#undo').disabled=running||!undo.length;$('#redo').disabled=running||!redo.length;

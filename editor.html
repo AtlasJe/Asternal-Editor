@@ -2,13 +2,13 @@
 <html lang="es">
 <head>
 <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Builda · Editor</title>
+<title>Asternal Editor</title>
 <link rel="stylesheet" href="editor.css"><link rel="stylesheet" href="editor-overrides.css"><link rel="stylesheet" href="editor-workspace.css">
 </head>
 <body>
 <div class="editor-shell">
  <header class="editor-topbar">
-  <div class="editor-brand"><a href="index.html" class="back" aria-label="Volver a proyectos">←</a><span class="brand-mark">B</span><button id="projectName" class="project-name project-name-button" title="Renombrar proyecto">Proyecto</button><small class="alpha">ALPHA</small></div>
+  <div class="editor-brand"><a href="index.html" class="back" aria-label="Volver a proyectos">←</a><span class="brand-mark">A</span><button id="projectName" class="project-name project-name-button" title="Renombrar proyecto">Proyecto</button><small class="alpha">ALPHA</small></div>
   <nav class="top-center" aria-label="Vistas del editor"><button class="mode-button active" data-mode="scene">Escena</button><button class="mode-button" data-mode="logic">Lógica</button><button class="mode-button" data-mode="assets">Recursos</button></nav>
   <div class="top-right"><span id="saveState" class="save-state" role="status">Sin cambios</span><button id="runButton" class="run-button">▶ Ejecutar</button></div>
  </header>
@@ -33,7 +33,7 @@
 </div>
 <div class="toast" id="toast" role="status"></div>
 <dialog id="nameDialog"><form id="nameForm"><h2>Nombre del proyecto</h2><label>Nombre<input id="renameInput" maxlength="48" required></label><p id="nameError" role="alert"></p><div class="dialog-actions"><button type="button" id="cancelRename">Cancelar</button><button type="submit">Guardar nombre</button></div></form></dialog>
-<dialog id="mapDialog"><header><div><strong>Editor de tiles</strong><small>Guardado por proyecto · El mapa todavía no se dibuja en la vista de juego</small></div><button id="closeMap">Volver a la escena</button></header><iframe id="mapEditor" title="Herramienta de mapas Builda"></iframe></dialog>
+<dialog id="mapDialog"><header><div><strong>Editor de tiles</strong><small>Guardado por proyecto · El mapa todavía no se dibuja en la vista de juego</small></div><button id="closeMap">Volver a la escena</button></header><iframe id="mapEditor" title="Editor de mapas"></iframe></dialog>
 <dialog id="missingDialog"><h2>No se puede abrir el proyecto</h2><p id="missingReason"></p><a href="index.html" class="outline-button">Volver a proyectos</a></dialog>
 <script src="project-store.js"></script><script src="scripts/nodes/builtin.js"></script><script src="engine/runtime/preview.js"></script><script src="editor.js"></script>
 </body></html>

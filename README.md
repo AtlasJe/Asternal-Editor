@@ -1,10 +1,10 @@
-# Builda Engine
+# Asternal Editor
 
 Editor experimental de juegos 2D que funciona en el navegador. Crea proyectos, arma una escena con sprites y conecta nodos visuales para definir comportamientos. La interfaz y esta documentación están en español.
 
 > **Estado: Alpha · v0.1.0.** Es un prototipo en desarrollo. La vista previa de escenas y la lógica básica funcionan; todavía faltan varias funciones de un motor completo.
 
-## Abrir Builda
+## Abrir Asternal Editor
 
 - **Probar localmente:** sirve la carpeta con Python y abre el editor en el navegador.
 - **Probar en línea:** después de publicar este repositorio con GitHub Pages, abre `https://<usuario>.github.io/<repositorio>/`.
@@ -24,7 +24,7 @@ Luego visita <http://127.0.0.1:8000/>. No requiere instalación de paquetes para
 - Abrir el editor de mapas integrado en un proyecto.
 - Guardar proyectos en el almacenamiento local del navegador.
 
-No se necesita IA para usar Builda. La publicación directa en Builda H5 aún no está implementada.
+No se necesita IA para usar Asternal Editor. La publicación directa en Builda H5 aún no está implementada.
 
 ## Publicar como GitHub Pages
 
@@ -40,7 +40,7 @@ Si el repositorio se llama `usuario.github.io`, la URL será `https://usuario.gi
 
 ## Uso y datos
 
-Los proyectos se guardan en el almacenamiento del navegador, en el origen desde el que se abre Builda. `localhost`, GitHub Pages y `file://` tienen bibliotecas separadas; cambiar de dirección no mueve automáticamente tus proyectos. Exportar/importar proyectos como archivo todavía está pendiente.
+Los proyectos se guardan en el almacenamiento del navegador, en el origen desde el que se abre Asternal Editor. `localhost`, GitHub Pages y `file://` tienen bibliotecas separadas; cambiar de dirección no mueve automáticamente tus proyectos. Exportar/importar proyectos como archivo todavía está pendiente.
 
 ## Estructura
 

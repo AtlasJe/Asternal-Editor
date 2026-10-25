@@ -1,4 +1,4 @@
-# Editor Alpha: funciones y límites
+# Asternal Editor Alpha: funciones y límites
 
 La aplicación empieza en index.html. No crea proyectos al abrirse.
 
