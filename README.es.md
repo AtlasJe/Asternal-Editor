@@ -1,38 +1,27 @@
-# Asternal Editor 2D
+# Asternal Editor
 
-Asternal Editor es un editor experimental de juegos 2D. La entrada de la aplicación es index.html. El listado empieza vacío; crea un
-proyecto para entrar al editor. Mapa es la vista principal; Escena, Lógica y
-Recursos están en la navegación superior.
-Funciones actuales y límites: [Editor Alpha](docs/editor-alpha.md).
+Asternal Editor es un editor propio de juegos 2D. El terreno, los sprites y la cámara se editan dentro de la misma escena; no usa un editor de mapas externo.
 
-Asternal Editor es un editor experimental de juegos 2D. Incluye una herramienta de mapas basada en el editor de Builda; la publicación en Builda H5 todavía no está implementada.
+## Abrir
 
-## Abrir sin servidor
-
-Abre index.html para Proyectos. El archivo
-[build/tilemap-editor.html](build/tilemap-editor.html) abre solamente la herramienta
-de mapas independiente. Para guardar mapas con tu juego, entra desde Editor de
-tiles dentro de un proyecto.
-
-## Ejecutar el editor fuente
-
-Desde la raíz del proyecto:
+Desde la raíz del proyecto ejecuta:
 
 ```powershell
-python -m http.server 8000
+python -m http.server 8000 --bind 127.0.0.1
 ```
 
-Después abre `http://localhost:8000/web/`.
+Abre `http://127.0.0.1:8000/`, crea un proyecto y entra a **Escena**. Usa **Pintar** para dibujar terreno sobre la cuadrícula, **Objetos** para seleccionar sprites y **Añadir** para crear objetos y nodos. Los cambios se guardan en el navegador.
 
-El servidor local es necesario para que el navegador permita los módulos ES y las llamadas `fetch` que usa la versión fuente.
+## Motor propio
 
-## Estructura propia
+- `engine/core/`: modelo de escena, ciclo de juego y carga de proyecto.
+- `engine/renderer/`: renderizado Canvas2D de terreno, sprites y cámara.
+- `engine/input/`: lectura de teclado y controles.
+- `engine/runtime/`: ejecución del grafo visual.
+- `scripts/nodes/`: eventos y acciones del editor visual.
+- `scenes/`: escenas del juego.
+- `assets/`: recursos propios del proyecto.
 
-- `engine/`: ciclo de juego, input, renderer, física, audio y runtime.
-- `scripts/nodes/`: definiciones reutilizables de nodos.
-- `scripts/custom/`: scripts JavaScript personalizados.
-- `scenes/`: escenas y conexiones de lógica.
-- `assets/`: imágenes, audio, fuentes, tilemaps y datos.
-- `build/`: archivos generados para exportación.
+Los proyectos con mapas antiguos se convierten a celdas de color y conservan los datos originales en el respaldo del proyecto. La conversión mantiene la ocupación de las celdas, pero no las texturas externas del formato anterior.
 
-El editor de mapas de Builda conserva `shared/`, `web/`, `pixi/` y `packs/` porque sus formatos y rutas dependen de ellos.
+La publicación y exportación todavía están en desarrollo.

@@ -19,30 +19,29 @@
       <div class="identity"><span class="app-name">ASTERNAL EDITOR <small>ALPHA</small></span><button id="projectName" class="project-name" title="Renombrar proyecto">Proyecto</button></div>
     </div>
     <nav class="top-center" aria-label="Vistas del editor">
-      <button class="mode-button active" data-mode="map" aria-pressed="true"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M9 3v18M15 3v18M3 9h18M3 15h18"/></svg>Mapa</button>
-      <button class="mode-button" data-mode="scene" aria-pressed="false"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="m3 17 6-6 4 4 3-3 5 5"/></svg>Escena</button>
+      <button class="mode-button active" data-mode="scene" aria-pressed="true"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="m3 17 6-6 4 4 3-3 5 5"/></svg>Escena</button>
       <button class="mode-button" data-mode="logic" aria-pressed="false"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="5" cy="6" r="2"/><circle cx="19" cy="6" r="2"/><circle cx="12" cy="18" r="2"/><path d="M7 6h10M6 8l5 8m7-8-5 8"/></svg>Lógica</button>
       <button class="mode-button" data-mode="assets" aria-pressed="false"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8" cy="8" r="1"/><path d="m3 17 6-6 4 4 3-3 5 5"/></svg>Recursos</button>
     </nav>
     <div class="top-right"><span id="saveState" class="save-state" role="status">Sin cambios</span><button id="runButton" class="run-button" title="Probar la escena 2D"><svg id="runIcon" viewBox="0 0 24 24" aria-hidden="true"><path d="m8 5 11 7-11 7z"/></svg><span id="runLabel">Probar escena</span></button></div>
   </header>
-  <main class="editor-body mode-map">
+  <main class="editor-body mode-scene">
     <aside class="left-panel" aria-label="Contenido del proyecto">
       <div class="panel-heading">CONTENIDO</div>
-      <div class="panel-tabs"><button class="panel-tab active" data-panel="scene">Objetos</button><button class="panel-tab" data-panel="nodes">Añadir</button></div>
+      <div class="panel-tabs"><button class="panel-tab active" data-panel="scene">Objetos</button><button class="panel-tab" data-panel="tiles">Pintar</button><button class="panel-tab" data-panel="nodes">Añadir</button></div>
       <section class="panel-content" id="scenePanel"><div class="panel-title"><span id="treeTitle">OBJETOS DE ESCENA</span><button id="addEntity" class="panel-action" title="Añadir objeto o nodo" aria-label="Añadir objeto o nodo">+</button></div><button class="tree-row" id="selectScene">Ajustes de escena</button><div id="entityList"></div></section>
+      <section class="panel-content hidden" id="tilesPanel"><div class="panel-title">TERRENO</div><p class="help">Pinta celdas directamente en la escena.</p><div class="tile-palette"><button class="tile-choice selected" data-color="#718b62"><i style="--tile:#718b62"></i>Hierba</button><button class="tile-choice" data-color="#a48a65"><i style="--tile:#a48a65"></i>Arena</button><button class="tile-choice" data-color="#657f8e"><i style="--tile:#657f8e"></i>Agua</button><button class="tile-choice" data-color="#777d80"><i style="--tile:#777d80"></i>Piedra</button><button class="tile-choice" data-color="#8a695e"><i style="--tile:#8a695e"></i>Tierra</button><button class="tile-choice erase" data-color="">Borrar terreno</button></div><p class="help">Tamaño de celda y dimensiones se ajustan en Escena.</p></section>
       <section class="panel-content hidden" id="nodesPanel"><label class="node-search"><input id="nodeSearch" type="search" placeholder="Buscar objetos o nodos" aria-label="Buscar objetos o nodos"></label><div id="nodeLibrary" class="node-library"></div></section>
       <div class="left-footer">Guardado en este navegador</div>
     </aside>
     <section class="stage-area" aria-label="Área de trabajo">
-      <div class="stage-toolbar"><div class="stage-heading"><strong id="stageLabel">Escena principal</strong><small id="stageDescription">Vista 2D del proyecto</small></div><div class="stage-tools"><button id="stageAdd" title="Añadir al proyecto">+ Añadir</button><button id="undo" title="Deshacer (Ctrl+Z)" aria-label="Deshacer">↶</button><button id="redo" title="Rehacer (Ctrl+Shift+Z)" aria-label="Rehacer">↷</button><button id="fit" title="Encuadrar vista (F)">Encuadrar</button></div></div>
+      <div class="stage-toolbar"><div class="stage-heading"><strong id="stageLabel">Escena principal</strong><small id="stageDescription">Terreno y objetos en un solo lugar</small></div><div class="stage-tools"><button id="stageAdd" title="Añadir objeto">+ Añadir objeto</button><button id="undo" title="Deshacer (Ctrl+Z)" aria-label="Deshacer">↶</button><button id="redo" title="Rehacer (Ctrl+Shift+Z)" aria-label="Rehacer">↷</button><button id="fit" title="Encuadrar vista (F)">Encuadrar</button></div></div>
       <div class="stage" id="stage">
-        <div id="mapView" class="workspace-view map-view"><iframe id="mapEditor" title="Mapa del proyecto"></iframe><div id="mapLoading" class="map-loading" role="status"><strong>Preparando el mapa…</strong><span>Cargando herramientas y recursos</span></div></div>
-        <div id="sceneView" class="workspace-view scene-view" hidden><canvas id="sceneCanvas" width="960" height="540" tabindex="0" aria-label="Escena 2D: arrastra los objetos para moverlos"></canvas></div>
+        <div id="sceneView" class="workspace-view scene-view"><canvas id="sceneCanvas" width="960" height="540" tabindex="0" aria-label="Escena 2D: pinta terreno y arrastra objetos para moverlos"></canvas></div>
         <div id="logicView" class="workspace-view graph-view" hidden><div id="graphWorld"><svg id="wires" aria-hidden="true"></svg><div id="graphNodes"></div></div><p id="graphHint" class="view-hint">Añade un evento y una acción. Conecta sus puertos.</p></div>
         <section id="assetsView" class="workspace-view assets-view" hidden><header><div><h2>Recursos del proyecto</h2><p>Importa imágenes para crear sprites en la escena.</p></div><button id="importAsset" class="outline-button">Importar imagen</button></header><div id="assetList"></div><input id="assetInput" type="file" accept="image/png,image/jpeg,image/webp" hidden></section>
       </div>
-      <footer class="stage-status"><span id="nodeStatus">Mapa del proyecto</span><span class="status-spacer"></span><span id="viewHelp">El mapa se guarda aquí · La vista de juego todavía no lo dibuja</span></footer>
+      <footer class="stage-status"><span id="nodeStatus">Escena del proyecto</span><span class="status-spacer"></span><span id="viewHelp">Usa Pintar para editar el terreno · Objetos para mover sprites</span></footer>
     </section>
     <aside class="right-panel" aria-label="Inspector"><div class="inspector-header"><span class="eyebrow">INSPECTOR</span><h2 id="inspectorTitle">Escena</h2></div><div id="inspector" class="inspector"></div></aside>
   </main>
@@ -50,6 +49,6 @@
 <div class="toast" id="toast" role="status"></div>
 <dialog id="nameDialog"><form id="nameForm"><h2>Nombre del proyecto</h2><label>Nombre<input id="renameInput" maxlength="48" required></label><p id="nameError" role="alert"></p><div class="dialog-actions"><button type="button" id="cancelRename">Cancelar</button><button type="submit">Guardar nombre</button></div></form></dialog>
 <dialog id="missingDialog"><h2>No se puede abrir el proyecto</h2><p id="missingReason"></p><a href="index.html" class="outline-button">Volver a proyectos</a></dialog>
-<script src="project-store.js"></script><script src="scripts/nodes/builtin.js"></script><script src="engine/runtime/preview.js"></script><script src="editor.js"></script>
+<script src="project-store.js"></script><script src="scripts/nodes/builtin.js"></script><script src="engine/core/scene-model.js"></script><script src="engine/renderer/scene-renderer.js"></script><script src="engine/runtime/preview.js"></script><script src="editor.js"></script>
 </body>
 </html>

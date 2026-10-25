@@ -1,11 +1,12 @@
 {
-  "format": "builda-scene",
-  "version": 1,
+  "format": "asternal-scene",
+  "version": 2,
   "id": "main",
   "name": "Main Scene",
   "background": "#151719",
-  "canvas": { "width": 960, "height": 540 },
-  "tilemaps": [],
+  "canvas": { "width": 960, "height": 540, "background": "#151719" },
+  "tileSize": 32,
+  "tiles": {},
   "entities": [],
   "logic": { "nodes": [], "connections": [] }
 }

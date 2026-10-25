@@ -31,6 +31,6 @@
     }
     project.nodes.filter(n=>n.type===type&&(type!=='on-input'||n.key===key)).forEach(n=>run(n.id));
   }
-  root.BuildaPreview={validate,dispatch};
-  if(typeof module!=='undefined') module.exports=root.BuildaPreview;
+  root.AsternalRuntime={validate,dispatch};
+  if(typeof module!=='undefined') module.exports=root.AsternalRuntime;
 })(globalThis);

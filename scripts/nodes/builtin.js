@@ -20,6 +20,6 @@
     branch:'<path d="M5 3v12a5 5 0 0 0 5 5h9M5 9h9a5 5 0 0 0 5-5M16 3l3-1 2 3m-5 12 3 3-3 3"/>',
     layers:'<path d="m12 3 10 5-10 5L2 8zm-10 9 10 5 10-5M2 16l10 5 10-5"/>'
   };
-  root.BuildaNodes = { definitions, icon: name => '<svg viewBox="0 0 24 24" aria-hidden="true">'+(paths[name]||paths.layers)+'</svg>' };
-  if(typeof module!=='undefined') module.exports=root.BuildaNodes;
+  root.AsternalNodes = { definitions, icon: name => '<svg viewBox="0 0 24 24" aria-hidden="true">'+(paths[name]||paths.layers)+'</svg>' };
+  if(typeof module!=='undefined') module.exports=root.AsternalNodes;
 })(globalThis);

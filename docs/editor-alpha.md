@@ -26,20 +26,14 @@ La aplicación empieza en index.html. No crea proyectos al abrirse.
 - La ejecución informa de destinos faltantes, ciclos y nodos sin runtime.
 - Importar imágenes PNG, JPEG o WebP de hasta 2 MB y crear Sprites desde ellas.
 
-## Mapa principal
+## Escena y terreno
 
-La herramienta de mapas original de Builda ocupa la vista principal del editor.
-Un proyecto nuevo empieza con un mapa vacío y editable. Se guarda dentro del
-proyecto automáticamente y se sincroniza antes de cambiar de vista o salir.
-El mapa todavía no se renderiza en la vista de juego del nuevo runtime.
-Los nombres de recursos originales pueden mantener el idioma del paquete.
+La escena es el único espacio de edición 2D. El terreno se pinta en celdas nativas de Asternal y comparte dimensiones, fondo y cámara con sprites y objetos. La vista previa dibuja tanto el terreno como los objetos.
 
+Los proyectos con mapas anteriores se convierten a una paleta de colores básica; la ocupación se conserva y los datos de origen quedan en el respaldo del proyecto.
 ## Pendiente
 
-El motor sigue en Alpha. No hay todavía publicación real en Builda, exportación
-.bg, físicas completas, editor de código personalizado ni renderizado de mapas
-en la vista de juego. builda.publish.json es un borrador sin validar contra el
-contrato oficial y no se debe presentar como integración de publicación terminada.
+El motor sigue en Alpha. La exportación, las físicas completas y los scripts personalizados siguen pendientes. La publicación para Builda H5 tampoco está implementada; `builda.publish.json` es un borrador sin validar contra el contrato oficial.
 
 ## Verificación
 

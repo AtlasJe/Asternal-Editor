@@ -2,21 +2,24 @@
 'use strict';
 const $ = selector => document.querySelector(selector);
 let store;
-const definitions = BuildaNodes.definitions;
+const definitions = AsternalNodes.definitions;
 const id = new URLSearchParams(location.search).get('project');
-let project, selected = null, mode = 'map', running = false, preview = null;
+let project, selected = null, mode = 'scene', running = false, preview = null;
 let pending = null, frame = 0, lastTime = 0, dirty = false, toastTimer;
-let mapReady = false, mapLoaded = false, mapLoadTimer = 0, mapFlushPending = null, viewRequest = 0;
+let activeTool = 'select', tileColor = '#718b62';
 const undo = [], redo = [], images = new Map();
-const canvas = $('#sceneCanvas'), ctx = canvas.getContext('2d');
+const canvas = $('#sceneCanvas');
 
 function blocked(message) {
   running = false; cancelAnimationFrame(frame);
   $('#missingReason').textContent = message;
   if (!$('#missingDialog').open) $('#missingDialog').showModal();
 }
-try { store = await BuildaStore.connect(); project = id && await store.get(id); } catch (error) { blocked(error.message); return; }
+try { store = await AsternalStore.connect(); project = id && await store.get(id); } catch (error) { blocked(error.message); return; }
 if (!project) { blocked('Selecciona o crea un proyecto desde la lista de Proyectos. Abrir esta dirección no crea ninguno.'); return; }
+project.scene.tiles ||= {};
+project.scene.tileSize ||= 32;
+const migratedLegacyTilemap = AsternalSceneModel.migrateLegacyTilemap(project);
 function notify(message) {
   $('#toast').textContent = message; $('#toast').classList.add('show');
   clearTimeout(toastTimer); toastTimer = setTimeout(() => $('#toast').classList.remove('show'), 4500);
@@ -25,6 +28,7 @@ const copy = value => JSON.parse(JSON.stringify(value));
 const def = node => definitions.find(d => d.id === node.type);
 const isObject = node => ['sprite','camera'].includes(node.type);
 let saveQueue = Promise.resolve(true), changeNumber = 0;
+if (migratedLegacyTilemap) { project.legacyTilemapBackup = project.tilemap; delete project.tilemap; }
 function save() {
   const generation = ++changeNumber;
   dirty = true; $('#saveState').textContent = 'Guardando…';
@@ -39,6 +43,7 @@ function save() {
   });
   return saveQueue;
 }
+if (migratedLegacyTilemap) save();
 function edit(fn) {
   if (running) { notify('Detén la ejecución para editar.'); return; }
   undo.push(copy(project)); if (undo.length > 30) undo.shift(); redo.length = 0;
@@ -74,7 +79,12 @@ function section(title) {
 function paragraph(host, text) { const p = document.createElement('p'); p.className = 'help'; p.textContent = text; host.append(p); }
 function showPanel(panel) {
   document.querySelectorAll('[data-panel]').forEach(b => b.classList.toggle('active', b.dataset.panel === panel));
-  $('#scenePanel').classList.toggle('hidden', panel !== 'scene'); $('#nodesPanel').classList.toggle('hidden', panel !== 'nodes');
+  $('#scenePanel').classList.toggle('hidden', panel !== 'scene');
+  $('#tilesPanel').classList.toggle('hidden', panel !== 'tiles');
+  $('#nodesPanel').classList.toggle('hidden', panel !== 'nodes');
+  activeTool = panel === 'tiles' ? 'paint' : 'select';
+  $('#sceneView').classList.toggle('painting', activeTool === 'paint');
+  if (mode === 'scene' && !running) $('#viewHelp').textContent = activeTool === 'paint' ? 'Pinta terreno directamente sobre la escena' : 'Selecciona y arrastra objetos · Usa Pintar para el terreno';
 }
 function library() {
   const term = $('#nodeSearch').value.toLocaleLowerCase('es');
@@ -83,14 +93,14 @@ function library() {
     (mode === 'scene' ? d.category === 'scene' : mode === 'logic' ? d.category !== 'scene' : true) &&
     (d.name + d.description).toLocaleLowerCase('es').includes(term))) {
     const button = document.createElement('button'); button.className = 'node-item'; button.disabled = running;
-    const icon = document.createElement('span'); icon.className = 'node-glyph'; icon.innerHTML = BuildaNodes.icon(definition.icon);
+    const icon = document.createElement('span'); icon.className = 'node-glyph'; icon.innerHTML = AsternalNodes.icon(definition.icon);
     const text = document.createElement('span'), title = document.createElement('b'), detail = document.createElement('small');
     title.textContent = definition.name; detail.textContent = definition.description; text.append(title, detail);
     button.append(icon, text); button.onclick = () => add(definition); $('#nodeLibrary').append(button);
   }
 }
 function add(definition) {
-  const n = {id:BuildaStore.id(),type:definition.id,name:definition.name,x:80,y:80,width:64,height:64,color:'#d2d9dc',
+  const n = {id:AsternalStore.id(),type:definition.id,name:definition.name,x:80,y:80,width:64,height:64,color:'#d2d9dc',
     gx:80+(project.nodes.filter(n=>!isObject(n)).length%4)*250,gy:70+Math.floor(project.nodes.filter(n=>!isObject(n)).length/4)*160,
     key:'Space',target:project.nodes.find(n=>n.type==='sprite')?.id || '',property:'x',value:100,dx:100,dy:0,condition:true};
   edit(() => { project.nodes.push(n); selected = n.id; });
@@ -103,7 +113,7 @@ function tree() {
   if (!visible.length) paragraph($('#entityList'), mode === 'logic' ? 'Todavía no hay nodos de lógica. Usa Añadir.' : 'Escena vacía. Usa + para añadir un objeto.');
   for (const node of visible) {
     const row = document.createElement('button'); row.className = 'entity-row' + (node.id === selected ? ' selected' : '');
-    const icon = document.createElement('span'); icon.className = 'entity-icon'; icon.innerHTML = BuildaNodes.icon(def(node)?.icon);
+    const icon = document.createElement('span'); icon.className = 'entity-icon'; icon.innerHTML = AsternalNodes.icon(def(node)?.icon);
     const text = document.createElement('span'); text.textContent = node.name;
     row.append(icon, text); row.onclick = () => { selected = node.id; setMode(isObject(node) ? 'scene' : 'logic'); refresh(); };
     $('#entityList').append(row);
@@ -123,6 +133,7 @@ function inspector() {
     const host = section('ESCENA');
     field(host,'Ancho',project.scene.width,value=>edit(()=>project.scene.width=Math.max(64,Math.min(4096,value))),'number');
     field(host,'Alto',project.scene.height,value=>edit(()=>project.scene.height=Math.max(64,Math.min(4096,value))),'number');
+    field(host,'Tamaño de celda',project.scene.tileSize||32,value=>edit(()=>project.scene.tileSize=Math.max(8,Math.min(128,Math.round(value)))),'number');
     field(host,'Fondo',project.scene.background,value=>edit(()=>project.scene.background=value),'color');
     paragraph(host,'La cámara define el origen visible durante la ejecución. Las posiciones se guardan por proyecto.');
     return;
@@ -176,23 +187,7 @@ function getImage(asset) {
 }
 function draw() {
   const data = preview || project; if(!data) return;
-  if(canvas.width!==data.scene.width) canvas.width=data.scene.width;
-  if(canvas.height!==data.scene.height) canvas.height=data.scene.height;
-  ctx.clearRect(0,0,canvas.width,canvas.height); ctx.fillStyle=data.scene.background;ctx.fillRect(0,0,canvas.width,canvas.height);ctx.imageSmoothingEnabled=false;
-  const camera=running?data.nodes.find(n=>n.type==='camera'):null;
-  ctx.save();if(camera)ctx.translate(-(camera.x||0),-(camera.y||0));
-  for(const node of data.nodes.filter(isObject)) {
-    const x=node.x||0,y=node.y||0,w=Math.max(1,node.width||64),h=Math.max(1,node.height||64);
-    if(node.type==='sprite') {
-      const image=getImage(data.assets.find(a=>a.id===node.assetId));
-      if(image?.complete&&image.naturalWidth)ctx.drawImage(image,x,y,w,h);
-      else {ctx.fillStyle=node.color||'#d2d9dc';ctx.fillRect(x,y,w,h);}
-    }
-    if(!running&&(node.id===selected||node.type==='camera')) {
-      ctx.strokeStyle=node.id===selected?'#ffffff':'#87969f';ctx.lineWidth=2;ctx.setLineDash(node.type==='camera'?[8,5]:[]);ctx.strokeRect(x-2,y-2,w+4,h+4);ctx.setLineDash([]);
-    }
-  }
-  ctx.restore();
+  AsternalRenderer.render(canvas,data.scene,data.nodes,data.assets,selected,running,getImage);
 }
 function fit() {
   if (mode === 'logic') { $('#logicView').scrollTo(0, 0); return; }
@@ -201,60 +196,23 @@ function fit() {
   const scale=Math.max(.01,Math.min((available.width-48)/project.scene.width,(available.height-48)/project.scene.height));
   canvas.style.width=project.scene.width*scale+'px';canvas.style.height=project.scene.height*scale+'px';
 }
-function ensureMapLoaded() {
-  if (mapLoaded) return;
-  mapLoaded = true;
-  $('#mapLoading').hidden = false;
-  $('#mapEditor').src = 'build/tilemap-editor.html?embed=1&project=' + encodeURIComponent(project.id);
-  mapLoadTimer = setTimeout(() => {
-    if (!mapReady) $('#mapLoading').replaceChildren('El mapa tardó demasiado en abrirse. Recarga el editor para intentarlo de nuevo.');
-  }, 12000);
-}
-function flushMap() {
-  if (!mapLoaded || !mapReady) return Promise.resolve(true);
-  if (mapFlushPending) return mapFlushPending.promise;
-  let resolve;
-  const promise = new Promise(done => { resolve = done; });
-  const timer = setTimeout(() => entry.finish(false), 7000);
-  const entry = {promise, finish(ok) {
-    if (mapFlushPending !== entry) return;
-    clearTimeout(timer); mapFlushPending = null; resolve(ok);
-  }};
-  mapFlushPending = entry;
-  try { $('#mapEditor').contentWindow.postMessage({type:'builda-map-flush',project:project.id},'*'); }
-  catch { entry.finish(false); }
-  return promise;
-}
-async function switchMode(next) {
-  if (next === mode) return;
-  const request = ++viewRequest;
-  if (mode === 'map' && !await flushMap()) { notify('No se pudo guardar el mapa. Sigue en Mapa e inténtalo otra vez.'); return; }
-  if (request !== viewRequest) return;
-  setMode(next);
-}
 function setMode(next) {
-  if (running && next === 'map') { notify('Detén la prueba para volver al mapa.'); return; }
   mode=next;pending=null;
   const selectedNode=project.nodes.find(node=>node.id===selected);
   if ((mode==='scene'&&selectedNode&&!isObject(selectedNode))||(mode==='logic'&&selectedNode&&isObject(selectedNode))) selected=null;
   $('.editor-body').className='editor-body mode-'+mode;
   document.querySelectorAll('[data-mode]').forEach(b=>{const active=b.dataset.mode===mode;b.classList.toggle('active',active);b.setAttribute('aria-pressed',String(active));});
-  // El canvas del mapa debe conservar su tamaño al cambiar de vista.
-  $('#mapView').classList.toggle('inactive',mode!=='map');
-  $('#mapView').inert=mode!=='map';
-  $('#mapView').setAttribute('aria-hidden',String(mode!=='map'));
   for(const view of ['scene','logic','assets']) $('#'+view+'View').hidden=view!==mode;
-  $('#stageLabel').textContent={map:'Mapa del proyecto',scene:running?'Vista de juego':'Escena principal',logic:'Lógica visual',assets:'Recursos'}[mode];
-  $('#stageDescription').textContent={map:'Pinta y organiza las capas',scene:'Objetos y cámara de la escena',logic:'Eventos y acciones conectados',assets:'Imágenes del proyecto'}[mode];
-  $('#viewHelp').textContent=running?'Esc para detener · La prueba no modifica el proyecto':{map:'El mapa se guarda aquí · La vista de juego todavía no lo dibuja',scene:'Arrastra objetos · Supr para eliminar',logic:'Conecta salida con entrada · Clic en una línea para quitarla',assets:'PNG, JPEG o WebP · Hasta 2 MB por imagen'}[mode];
-  $('#fit').hidden=mode==='assets'||mode==='map';
+  $('#stageLabel').textContent={scene:running?'Vista de juego':'Escena principal',logic:'Lógica visual',assets:'Recursos'}[mode];
+  $('#stageDescription').textContent={scene:'Terreno y objetos en un solo lugar',logic:'Eventos y acciones conectados',assets:'Imágenes del proyecto'}[mode];
+  $('#viewHelp').textContent=running?'Esc para detener · La prueba no modifica el proyecto':{scene:activeTool==='paint'?'Pinta directamente sobre la escena':'Selecciona y arrastra objetos · Usa Pintar para el terreno',logic:'Conecta salida con entrada · Clic en una línea para quitarla',assets:'PNG, JPEG o WebP · Hasta 2 MB por imagen'}[mode];
+  $('#fit').hidden=mode==='assets';
   $('#stageAdd').textContent=mode==='logic'?'+ Añadir nodo':'+ Añadir objeto';
   $('#nodeSearch').placeholder=mode==='logic'?'Buscar nodos de lógica':'Buscar objetos';
   $('#nodeSearch').setAttribute('aria-label',$('#nodeSearch').placeholder);
   $('#treeTitle').textContent=mode==='logic'?'NODOS DEL GRAFO':'OBJETOS DE ESCENA';
   $('#selectScene').hidden=mode==='logic';
   if(mode==='scene')showPanel('scene');else if(mode==='logic')showPanel('nodes');
-  if(mode==='map')ensureMapLoaded();
   refresh();
 }
 function graph() {
@@ -359,7 +317,7 @@ function assets() {
 function refresh() {
   $('#projectName').textContent=project.name;document.title=project.name+' · Asternal Editor';
   const objects=project.nodes.filter(isObject).length,logicNodes=project.nodes.length-objects,connections=project.connections.length;
-  $('#nodeStatus').textContent=mode==='map'?'Mapa del proyecto':mode==='assets'?project.assets.length+(project.assets.length===1?' imagen':' imágenes'):mode==='logic'?logicNodes+(logicNodes===1?' nodo de lógica':' nodos de lógica')+' · '+connections+(connections===1?' conexión':' conexiones'):objects+(objects===1?' objeto':' objetos');
+  $('#nodeStatus').textContent=mode==='assets'?project.assets.length+(project.assets.length===1?' imagen':' imágenes'):mode==='logic'?logicNodes+(logicNodes===1?' nodo de lógica':' nodos de lógica')+' · '+connections+(connections===1?' conexión':' conexiones'):objects+(objects===1?' objeto':' objetos')+' · '+Object.keys(project.scene.tiles||{}).length+' celdas';
   $('#undo').disabled=running||!undo.length;$('#redo').disabled=running||!redo.length;
   tree();library();inspector();graph();assets();fit();draw();
 }
@@ -373,20 +331,26 @@ function stop() {
 }
 async function start() {
   if(running){stop();return;}
-  if(mode==='map'&&!await flushMap()){notify('Guarda el mapa antes de probar la escena.');return;}
-  const errors=BuildaPreview.validate(project);if(errors.length){notify(errors.join(' '));return;}
+  const errors=AsternalRuntime.validate(project);if(errors.length){notify(errors.join(' '));return;}
   if(dirty&&!await saveQueue)return;
-  preview=copy(project);running=true;BuildaPreview.dispatch(preview,'on-start',1/60);
+  preview=copy(project);running=true;AsternalRuntime.dispatch(preview,'on-start',1/60);
   runState(true);$('.editor-shell').classList.add('running');
   setMode('scene');lastTime=performance.now();
   const tick=time=>{if(!running)return;const dt=Math.min((time-lastTime)/1000,.05);lastTime=time;
-    try{BuildaPreview.dispatch(preview,'on-update',dt);draw();frame=requestAnimationFrame(tick);}
+    try{AsternalRuntime.dispatch(preview,'on-update',dt);draw();frame=requestAnimationFrame(tick);}
     catch(error){stop();notify(error.message);}
   };frame=requestAnimationFrame(tick);canvas.focus();
 }
 canvas.onpointerdown=event=>{
   if(running||event.button!==0)return;
   const bounds=canvas.getBoundingClientRect(),p={x:(event.clientX-bounds.left)*canvas.width/bounds.width,y:(event.clientY-bounds.top)*canvas.height/bounds.height};
+  if(activeTool==='paint'){
+    const before=copy(project),size=project.scene.tileSize||32;let changed=false;
+    const paint=e=>{const x=Math.floor((e.clientX-bounds.left)*canvas.width/bounds.width/size),y=Math.floor((e.clientY-bounds.top)*canvas.height/bounds.height/size);if(x<0||y<0||x*size>=canvas.width||y*size>=canvas.height)return;if(AsternalSceneModel.setTile(project.scene,x,y,tileColor))changed=true;draw();};
+    canvas.setPointerCapture(event.pointerId);paint(event);
+    const finish=()=>{canvas.onpointermove=null;canvas.onpointerup=null;canvas.onpointercancel=null;if(changed){undo.push(before);redo.length=0;save();refresh();}};
+    canvas.onpointermove=paint;canvas.onpointerup=finish;canvas.onpointercancel=finish;return;
+  }
   const node=[...project.nodes].reverse().find(n=>isObject(n)&&p.x>=(n.x||0)&&p.y>=(n.y||0)&&p.x<=(n.x||0)+(n.width||64)&&p.y<=(n.y||0)+(n.height||64));
   selected=node?.id||null;tree();inspector();draw();canvas.focus();if(!node)return;
   const x=node.x||0,y=node.y||0,before=copy(project);let moved=false;
@@ -399,13 +363,14 @@ canvas.onpointerdown=event=>{
 };
 $('#nodeSearch').oninput=library;
 document.querySelectorAll('[data-panel]').forEach(b=>b.onclick=()=>showPanel(b.dataset.panel));
-document.querySelectorAll('[data-mode]').forEach(b=>b.onclick=()=>switchMode(b.dataset.mode));
+document.querySelectorAll('[data-mode]').forEach(b=>b.onclick=()=>setMode(b.dataset.mode));
+document.querySelectorAll('.tile-choice').forEach(button=>button.onclick=()=>{tileColor=button.dataset.color||null;document.querySelectorAll('.tile-choice').forEach(item=>item.classList.toggle('selected',item===button));showPanel('tiles');});
 $('#addEntity').onclick=()=>showPanel('nodes');
 $('#stageAdd').onclick=()=>{
   showPanel('nodes');
   if(window.innerWidth<=700) $('.left-panel').scrollIntoView({behavior:'smooth',block:'start'});
 };
-$('#selectScene').onclick=()=>{selected=null;refresh();};
+$('#selectScene').onclick=()=>{selected=null;showPanel('scene');refresh();};
 $('#undo').onclick=()=>history(undo,redo);$('#redo').onclick=()=>history(redo,undo);$('#fit').onclick=fit;
 $('#runButton').onclick=start;
 $('#importAsset').onclick=()=>{if(!running)$('#assetInput').click();};
@@ -415,7 +380,7 @@ $('#assetInput').onchange=async event=>{
   try{
     const data=await new Promise((resolve,reject)=>{const reader=new FileReader();reader.onload=()=>resolve(reader.result);reader.onerror=reject;reader.readAsDataURL(file);});
     const img=new Image();await new Promise((resolve,reject)=>{img.onload=resolve;img.onerror=reject;img.src=data;});
-    edit(()=>project.assets.push({id:BuildaStore.id(),name:file.name,data}));
+    edit(()=>project.assets.push({id:AsternalStore.id(),name:file.name,data}));
   }catch{notify('El archivo no contiene una imagen válida.');}
 };
 $('#projectName').onclick=()=>{if(running)return;$('#renameInput').value=project.name;$('#nameError').textContent='';$('#nameDialog').showModal();$('#renameInput').focus();};
@@ -426,40 +391,20 @@ $('#nameForm').onsubmit=async event=>{event.preventDefault();const name=$('#rena
 $('.editor-brand .back').addEventListener('click',async event=>{
   const destination=event.currentTarget.href;
   event.preventDefault();
-  if(mode==='map'&&!await flushMap()){notify('El mapa no se pudo guardar. Sigue en Mapa e inténtalo otra vez.');return;}
   await saveQueue;
   if(dirty){notify('Hay cambios sin guardar. Revisa el almacenamiento antes de salir.');return;}
   location.assign(destination);
 });
-window.addEventListener('message',async event=>{
-  if(event.source!==$('#mapEditor').contentWindow||event.data?.project!==project.id)return;
-  if(event.data.type==='builda-map-ready'){
-    mapReady=true;clearTimeout(mapLoadTimer);$('#mapLoading').hidden=true;
-  }
-  if(event.data.type==='builda-map-request') {
-    event.source.postMessage({type:'builda-map-load',project:project.id,text:project.tilemap||null},'*');
-  }
-  if(event.data.type==='builda-map-save'&&(typeof event.data.text==='string'||event.data.text===null)) {
-    if(event.data.text!==project.tilemap){project.tilemap=event.data.text;save();}
-    await saveQueue;
-    event.source.postMessage({type:'builda-map-saved',project:project.id,ok:!dirty},'*');
-    if(event.data.close)mapFlushPending?.finish(!dirty);
-  }
-});
 window.addEventListener('keydown',event=>{
   if(event.target.closest('input,textarea,select')||document.querySelector('dialog[open]'))return;
-  if(running){if(event.key==='Escape')stop();else if(!event.repeat){BuildaPreview.dispatch(preview,'on-input',1/60,event.code);draw();}return;}
-  if(mode==='map'){
-    if((event.ctrlKey||event.metaKey)&&event.key.toLowerCase()==='s'){event.preventDefault();flushMap();}
-    return;
-  }
+  if(running){if(event.key==='Escape')stop();else if(!event.repeat){AsternalRuntime.dispatch(preview,'on-input',1/60,event.code);draw();}return;}
   if((event.ctrlKey||event.metaKey)&&event.key.toLowerCase()==='s'){event.preventDefault();save();}
   if((event.ctrlKey||event.metaKey)&&event.key.toLowerCase()==='z'){event.preventDefault();event.shiftKey?history(redo,undo):history(undo,redo);}
   if((mode==='scene'||mode==='logic')&&(event.key==='Delete'||event.key==='Backspace')){event.preventDefault();removeSelected();}
   if((mode==='scene'||mode==='logic')&&event.key.toLowerCase()==='f')fit();
 });
 window.addEventListener('beforeunload',event=>{if(dirty){event.preventDefault();event.returnValue='';}});
-window.addEventListener('builda-storage-changed',async()=>{await saveQueue;try{const latest=await store.get(id);if(!latest||latest.revision!==project.revision)blocked('Este proyecto cambió o se eliminó en otra pestaña. Vuelve a Proyectos para abrir su versión actual.');}catch(error){blocked(error.message);}});
+window.addEventListener('asternal-storage-changed',async()=>{await saveQueue;try{const latest=await store.get(id);if(!latest||latest.revision!==project.revision)blocked('Este proyecto cambió o se eliminó en otra pestaña. Vuelve a Proyectos para abrir su versión actual.');}catch(error){blocked(error.message);}});
 new ResizeObserver(()=>{fit();wires();}).observe($('#stage'));
-setMode('map');
+setMode('scene');
 })();

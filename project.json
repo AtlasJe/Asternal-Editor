@@ -1,10 +1,10 @@
 {
-  "format": "builda-game",
+  "format": "asternal-game",
   "version": 1,
-  "name": "Builda 2D Game",
-  "engine": { "id": "builda-engine", "version": "0.1.0", "renderer": "canvas2d" },
+  "name": "Asternal 2D Game",
+  "engine": { "id": "asternal-engine", "version": "0.1.0", "renderer": "canvas2d" },
   "mainScene": "scenes/main.scene.json",
-  "editor": { "tilemapBase": "地图编辑器.html", "mapFormat": "tilemap", "defaultLanguage": "es" },
+  "editor": { "defaultView": "scene", "grid": "native", "defaultLanguage": "es" },
   "input": {
     "move_left": ["ArrowLeft", "KeyA"],
     "move_right": ["ArrowRight", "KeyD"],

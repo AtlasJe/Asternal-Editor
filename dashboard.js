@@ -85,7 +85,7 @@ form.addEventListener('submit', async event => {
 $('#search').addEventListener('input', render);
 document.addEventListener('click', event => { if (!event.target.closest('.more-button, .project-menu')) closeMenus(); });
 document.addEventListener('keydown', event => { if (event.key === 'Escape') closeMenus(); });
-window.addEventListener('builda-storage-changed', refresh);
-try { store = await BuildaStore.connect(); await refresh(); }
+window.addEventListener('asternal-storage-changed', refresh);
+try { store = await AsternalStore.connect(); await refresh(); }
 catch (error) { report(error.message); }
 })();

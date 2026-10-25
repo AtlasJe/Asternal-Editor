@@ -34,7 +34,7 @@
         nodes: Array.isArray(project.nodes) ? project.nodes.filter(n => n && typeof n.id === 'string') : [],
         connections: Array.isArray(project.connections) ? project.connections : [],
         assets: Array.isArray(project.assets) ? project.assets : [],
-        scene: { width: 960, height: 540, background: '#1c2023', ...project.scene } };
+        scene: { width: 960, height: 540, background: '#1c2023', tileSize: 32, tiles: {}, ...project.scene } };
     }
     function get(projectId) { const project = read().projects.find(p => p.id === projectId); return project ? copy(normalize(project)) : null; }
     function save(project) {
@@ -81,12 +81,12 @@
         const requestId = ++sequence;
         const timer = setTimeout(() => { waiting.delete(requestId); reject(Error('El almacenamiento no responde. Recarga la página.')); }, 10000);
         waiting.set(requestId, { resolve, reject, timer });
-        frame.contentWindow.postMessage({ channel:'builda-storage', requestId, method, args }, '*');
+        frame.contentWindow.postMessage({ channel:'asternal-storage', requestId, method, args }, '*');
       });
     }
     window.addEventListener('message', event => {
-      if (event.source !== frame.contentWindow || event.data?.channel !== 'builda-storage') return;
-      if (event.data.changed) { window.dispatchEvent(new Event('builda-storage-changed')); return; }
+      if (event.source !== frame.contentWindow || event.data?.channel !== 'asternal-storage') return;
+      if (event.data.changed) { window.dispatchEvent(new Event('asternal-storage-changed')); return; }
       const pending = waiting.get(event.data.requestId); if (!pending) return;
       waiting.delete(event.data.requestId); clearTimeout(pending.timer);
       if (event.data.error) pending.reject(Error(event.data.error)); else pending.resolve(event.data.result);
@@ -104,6 +104,6 @@
     await request('initialize',[legacy]);
     return Object.fromEntries(['list','get','save','create','rename','remove','restore'].map(method => [method,(...args) => request(method,args)]));
   }
-  root.BuildaStore = { createStore, connect, id, key:KEY };
-  if (typeof module !== 'undefined') module.exports = root.BuildaStore;
+  root.AsternalStore = { createStore, connect, id, key:KEY };
+  if (typeof module !== 'undefined') module.exports = root.AsternalStore;
 })(globalThis);
