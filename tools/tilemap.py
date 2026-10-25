@@ -234,7 +234,7 @@ def build_offline(out=None, startup_map=None):
     data=json.dumps(payload,ensure_ascii=False,separators=(',',':')).replace('<','\\u003c')
     css=(ROOT/'shared/style.css').read_text()
     html=f'''<!doctype html>
-<html lang="es"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover"><title>Editor de mapas Builda</title><style>{css}</style></head>
+<html lang="es"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover"><title>Mapa · Asternal Editor</title><style>{css}</style></head>
 <body><div id="viewport"></div><div id="press-ring"></div>
 <script>globalThis.__TILEMAP_OFFLINE__={data};</script>
 <script>{js}</script></body></html>'''

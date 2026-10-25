@@ -31,7 +31,7 @@ function card(project) {
   const element = document.createElement('article'); element.className = 'project-card';
   element.innerHTML = '<div class="project-card-top"><span class="project-glyph">' + folderIcon + '</span><button class="more-button" aria-label="Opciones del proyecto" aria-expanded="false">···</button></div><h3></h3><p></p><div class="project-card-bottom"><span></span><button class="open-project">Abrir editor →</button></div>';
   element.querySelector('h3').textContent = project.name;
-  element.querySelector('p').textContent = project.nodes.length + ' nodos · ' + project.assets.length + ' recursos';
+  element.querySelector('p').textContent = project.nodes.length + (project.nodes.length === 1 ? ' nodo' : ' nodos') + ' · ' + project.assets.length + (project.assets.length === 1 ? ' recurso' : ' recursos');
   element.querySelector('.project-card-bottom span').textContent = new Date(project.updatedAt).toLocaleDateString('es');
   element.querySelector('.open-project').onclick = () => openProject(project);
   const more = element.querySelector('.more-button');

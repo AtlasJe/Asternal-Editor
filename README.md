@@ -1,6 +1,6 @@
 # Asternal Editor
 
-Editor experimental de juegos 2D que funciona en el navegador. Crea proyectos, arma una escena con sprites y conecta nodos visuales para definir comportamientos. La interfaz y esta documentación están en español.
+Editor experimental de juegos 2D que funciona en el navegador. Crea proyectos, edita el mapa directamente en el espacio principal, arma una escena con sprites y conecta nodos visuales para definir comportamientos. La interfaz y esta documentación están en español.
 
 > **Estado: Alpha · v0.1.0.** Es un prototipo en desarrollo. La vista previa de escenas y la lógica básica funcionan; todavía faltan varias funciones de un motor completo.
 
@@ -18,10 +18,10 @@ Luego visita <http://127.0.0.1:8000/>. No requiere instalación de paquetes para
 ## Funciones disponibles
 
 - Crear, buscar, renombrar y eliminar proyectos; recuperar una eliminación reciente.
+- Pintar y organizar el mapa en la vista principal, con guardado dentro del proyecto.
 - Editar una escena 2D con sprites, posición, tamaño, color e imágenes importadas.
 - Construir lógica conectando nodos de eventos y acciones.
 - Ejecutar una vista previa aislada y usar deshacer/rehacer.
-- Abrir el editor de mapas integrado en un proyecto.
 - Guardar proyectos en el almacenamiento local del navegador.
 
 No se necesita IA para usar Asternal Editor. La publicación directa en Builda H5 aún no está implementada.

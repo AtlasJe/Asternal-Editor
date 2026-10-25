@@ -26,10 +26,11 @@ La aplicación empieza en index.html. No crea proyectos al abrirse.
 - La ejecución informa de destinos faltantes, ciclos y nodos sin runtime.
 - Importar imágenes PNG, JPEG o WebP de hasta 2 MB y crear Sprites desde ellas.
 
-## Editor de tiles
+## Mapa principal
 
-La herramienta original de Builda se abre desde el proyecto y conserva su mapa
-por separado. Se sincroniza automáticamente al editar y antes de cerrar.
+La herramienta de mapas original de Builda ocupa la vista principal del editor.
+Un proyecto nuevo empieza con un mapa vacío y editable. Se guarda dentro del
+proyecto automáticamente y se sincroniza antes de cambiar de vista o salir.
 El mapa todavía no se renderiza en la vista de juego del nuevo runtime.
 Los nombres de recursos originales pueden mantener el idioma del paquete.
 

@@ -1,8 +1,0 @@
-.project-name-button{border:0;background:transparent;padding:3px 5px;color:#b9c0c3;font:inherit;text-align:left;cursor:pointer;border-radius:4px}
-.project-name-button:hover{background:#25292b;color:#eef0f0}
-.delete-node{width:100%;border:1px solid #573b3b;background:transparent;border-radius:5px;color:#d39e9e;padding:8px;font-size:10px;cursor:pointer}
-.delete-node:hover{background:#392628;color:#f0c5c5}
-.back svg,.stage-tools svg,.run-button svg{display:block;width:16px;height:16px;fill:none;stroke:currentColor;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round}
-.run-button{display:inline-flex;align-items:center;gap:6px}
-.run-button svg{width:13px;height:13px;fill:currentColor;stroke:none}
-.stage-tools button{display:grid;place-items:center}

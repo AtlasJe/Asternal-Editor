@@ -1,7 +1,8 @@
 # Asternal Editor 2D
 
 Asternal Editor es un editor experimental de juegos 2D. La entrada de la aplicación es index.html. El listado empieza vacío; crea un
-proyecto para entrar al editor de escenas, lógica y recursos.
+proyecto para entrar al editor. Mapa es la vista principal; Escena, Lógica y
+Recursos están en la navegación superior.
 Funciones actuales y límites: [Editor Alpha](docs/editor-alpha.md).
 
 Asternal Editor es un editor experimental de juegos 2D. Incluye una herramienta de mapas basada en el editor de Builda; la publicación en Builda H5 todavía no está implementada.

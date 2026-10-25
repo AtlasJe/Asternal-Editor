@@ -22,6 +22,19 @@ import {
 import { DualGrid } from './terrain-strategies.js';
 import { MAX_BRUSH, SELECT_MODES, SHAPES } from './editor.js';
 
+// Traducción visual: los identificadores del paquete se conservan para que
+// los mapas existentes sigan encontrando sus tiles y objetos.
+const spanishLabel = {
+  'Kenney 沙漠射击':'Kenney Desierto', '沙漠地形':'Terreno desértico',
+  '场景':'Escenario', '物品':'Objetos', '角色':'Personajes', '物体':'Objetos',
+  '沙地':'Arena', '紫草地':'Hierba morada', '青草地':'Hierba verde',
+  '金属地板':'Suelo metálico', '深色土地':'Tierra oscura',
+  '紫色高台':'Meseta morada', '紫色高崖':'Acantilado morado',
+  '橙色栅栏':'Valla naranja', '灰岩高台':'Meseta de roca gris',
+  '青色高台':'Meseta turquesa', '铁丝网':'Alambrada'
+};
+const visibleLabel = value => spanishLabel[value] ?? value;
+
 const svg = (body) =>
   `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">${body}</svg>`;
 
@@ -268,9 +281,9 @@ export function createPanel({ config, sheets, objectSprites = [], tools, actions
   // ---- terrains ----
   const frames = sheetFrames(config);
   const terrainButtons = config.terrains.map((t, i) => {
-    const b = el('button', { className: 'terrain', title: `${t.label ?? t.name} (${i + 1})` }, [
+    const b = el('button', { className: 'terrain', title: `${visibleLabel(t.label ?? t.name)} (${i + 1})` }, [
       el('span', { className: 'asset-art' }, [t.wang ? wangIcon(sheets[i], frames[i][0]) : terrainIcon(sheets[i], frames[i], config.tileSize, i, t.connect === 'edge')]),
-      el('span', { className: 'asset-name', textContent: t.label ?? t.name }),
+      el('span', { className: 'asset-name', textContent: visibleLabel(t.label ?? t.name) }),
     ]);
     b.addEventListener('click', () => setTerrain(i));
     return b;
@@ -281,9 +294,9 @@ export function createPanel({ config, sheets, objectSprites = [], tools, actions
     const anims = objectAnimations(o);
     const icon = objectIcon(objectSprites[i], anims.frameCount, Infinity);
     const names = anims.animations.length > 1 ? `, animaciones: ${anims.animations.map((a) => a.label).join(' / ')}` : '';
-    const b = el('button', { className: 'terrain object', title: `${o.label} (tamaño ${o.footprint[0]}×${o.footprint[1]}${names})` }, [
+    const b = el('button', { className: 'terrain object', title: `${visibleLabel(o.label)} (tamaño ${o.footprint[0]}×${o.footprint[1]}${names})` }, [
       el('span', { className: 'asset-art' }, [icon]),
-      el('span', { className: 'asset-name', textContent: o.label }),
+      el('span', { className: 'asset-name', textContent: visibleLabel(o.label) }),
     ]);
     icon.showFrame?.(anims.animations[0].frames[0]);
     if (anims.animations[0].frames.length > 1 && icon.showFrame) animatedIcons.push([b, icon, anims, -1]);
@@ -353,7 +366,7 @@ export function createPanel({ config, sheets, objectSprites = [], tools, actions
   window.addEventListener('resize', closeSourceMenu);
   function buildSourceMenu() {
     const rows = sources.map((s) => {
-      const pick = el('button', { type: 'button', className: 'source-pick', textContent: s.name, title: s.name });
+      const pick = el('button', { type: 'button', className: 'source-pick', textContent: visibleLabel(s.name), title: visibleLabel(s.name) });
       pick.classList.toggle('active', s.id === source);
       pick.addEventListener('click', () => {
         closeSourceMenu();
@@ -393,8 +406,8 @@ export function createPanel({ config, sheets, objectSprites = [], tools, actions
     if (!wangAtlas.canSwitch()) return;
     source = sources.some((s) => s.id === id) ? id : (sources[0]?.id ?? '');
     const name = sources.find((x) => x.id === source)?.name ?? 'Sin recursos';
-    sourceName.textContent = name;
-    sourceEntry.title = `Paquete de tiles: ${name} (clic para cambiar)`;
+    sourceName.textContent = visibleLabel(name);
+    sourceEntry.title = `Paquete de tiles: ${visibleLabel(name)} (clic para cambiar)`;
     store(SOURCE_KEY, source);
     category = null;
     render();
@@ -414,7 +427,7 @@ export function createPanel({ config, sheets, objectSprites = [], tools, actions
     tabs.replaceChildren(
       ...[...groups].map(([g, list]) => {
         const wang = g.startsWith('wang:') ? config.terrains[Number(g.slice(5))] : null;
-        const label = wang ? wang.label ?? wang.name : g;
+        const label = visibleLabel(wang ? wang.label ?? wang.name : g);
         const b = el('button', { type: 'button', textContent: label, title: wang ? label : `${label}（${list.length}）` });
         b.dataset.group = g;
         b.addEventListener('click', () => showCategory(g));

@@ -58,6 +58,7 @@ async function start(createRenderer) {
   const packs = await fetchProjectPacks('../packs/');
   const config = mergePacks(baseConfig, packs);
   const projectBridge = await connectProject();
+  if (projectBridge) document.body.classList.add('embedded-project');
   const carriedMap = takeCarriedMap(config);
   const startupFile = projectBridge ? null : baseConfig.map.startupFile;
   let initialMap = carriedMap || (projectBridge?.text ? readMapFile(projectBridge.text, config) : null);
@@ -93,8 +94,9 @@ async function start(createRenderer) {
   const T = config.tileSize;
   const terrains = config.terrains;
   // Map-settings reloads restore the open map; fresh starts load startupFile.
-  let fileOpen = !!initialMap;
-  let fileName = sessionStorage.getItem('tilemap:carried-filename') ?? startupFile?.split('/').pop() ?? '地图.tilemap';
+  // Un proyecto nuevo comienza con un mapa vacío y editable; el proyecto ya existe.
+  let fileOpen = !!initialMap || !!projectBridge;
+  let fileName = sessionStorage.getItem('tilemap:carried-filename') ?? startupFile?.split('/').pop() ?? 'Mapa.tilemap';
   sessionStorage.removeItem('tilemap:carried-filename');
   function emptyMap() {
     const next = new TileMap(32, 32, terrainHeights(config.terrains), terrainUsesCellPlacement(config.terrains));
@@ -637,6 +639,10 @@ async function start(createRenderer) {
     fileBar.querySelector('button').focus();
   });
   fileBar.insertBefore(closeFileButton, saveButton);
+  if (projectBridge) {
+    saveButton.title = 'Descargar mapa .tilemap';
+    saveButton.setAttribute('aria-label', saveButton.title);
+  }
   saveButton.disabled = !fileOpen;
   document.body.append(fileBar, mapInput);
   const uiEditor = createUIEditor(packs);

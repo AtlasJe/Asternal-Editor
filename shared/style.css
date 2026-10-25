@@ -1942,3 +1942,4 @@ body.editing-ui > :not(#ui-editor) {display:none !important;}
 #ui-editor .props-unit-input input {padding-right:34px;box-sizing:border-box;appearance:textfield;-moz-appearance:textfield;}
 #ui-editor .props-unit-input input::-webkit-inner-spin-button,
 #ui-editor .props-unit-input input::-webkit-outer-spin-button {appearance:none;margin:0;}
+body.embedded-project :is(#file-bar, .ui-map-file-bar) [data-file-action="close"]{display:none!important}

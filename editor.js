@@ -4,9 +4,9 @@ const $ = selector => document.querySelector(selector);
 let store;
 const definitions = BuildaNodes.definitions;
 const id = new URLSearchParams(location.search).get('project');
-let project, selected = null, mode = 'scene', running = false, preview = null;
+let project, selected = null, mode = 'map', running = false, preview = null;
 let pending = null, frame = 0, lastTime = 0, dirty = false, toastTimer;
-let mapReady = false;
+let mapReady = false, mapLoaded = false, mapLoadTimer = 0, mapFlushPending = null, viewRequest = 0;
 const undo = [], redo = [], images = new Map();
 const canvas = $('#sceneCanvas'), ctx = canvas.getContext('2d');
 
@@ -79,7 +79,9 @@ function showPanel(panel) {
 function library() {
   const term = $('#nodeSearch').value.toLocaleLowerCase('es');
   $('#nodeLibrary').replaceChildren();
-  for (const definition of definitions.filter(d => (d.name + d.description).toLocaleLowerCase('es').includes(term))) {
+  for (const definition of definitions.filter(d =>
+    (mode === 'scene' ? d.category === 'scene' : mode === 'logic' ? d.category !== 'scene' : true) &&
+    (d.name + d.description).toLocaleLowerCase('es').includes(term))) {
     const button = document.createElement('button'); button.className = 'node-item'; button.disabled = running;
     const icon = document.createElement('span'); icon.className = 'node-glyph'; icon.innerHTML = BuildaNodes.icon(definition.icon);
     const text = document.createElement('span'), title = document.createElement('b'), detail = document.createElement('small');
@@ -93,24 +95,31 @@ function add(definition) {
     key:'Space',target:project.nodes.find(n=>n.type==='sprite')?.id || '',property:'x',value:100,dx:100,dy:0,condition:true};
   edit(() => { project.nodes.push(n); selected = n.id; });
   setMode(isObject(n) ? 'scene' : 'logic');
+  if (window.innerWidth <= 700) $('.stage-area').scrollIntoView({behavior:'smooth',block:'start'});
 }
 function tree() {
   $('#entityList').replaceChildren();
-  if (!project.nodes.length) paragraph($('#entityList'), 'Escena vacía. Añade tu primer objeto con +.');
-  for (const node of project.nodes) {
+  const visible = project.nodes.filter(node => mode === 'logic' ? !isObject(node) : isObject(node));
+  if (!visible.length) paragraph($('#entityList'), mode === 'logic' ? 'Todavía no hay nodos de lógica. Usa Añadir.' : 'Escena vacía. Usa + para añadir un objeto.');
+  for (const node of visible) {
     const row = document.createElement('button'); row.className = 'entity-row' + (node.id === selected ? ' selected' : '');
     const icon = document.createElement('span'); icon.className = 'entity-icon'; icon.innerHTML = BuildaNodes.icon(def(node)?.icon);
     const text = document.createElement('span'); text.textContent = node.name;
     row.append(icon, text); row.onclick = () => { selected = node.id; setMode(isObject(node) ? 'scene' : 'logic'); refresh(); };
     $('#entityList').append(row);
   }
-  $('#selectScene').classList.toggle('selected', !selected);
+  $('#selectScene').classList.toggle('selected', !selected && mode === 'scene');
 }
 function inspector() {
   $('#inspector').replaceChildren();
   const node = project.nodes.find(n=>n.id===selected);
   $('#inspectorTitle').textContent = node?.name || 'Escena principal';
   if (!node) {
+    if (mode === 'logic') {
+      $('#inspectorTitle').textContent = 'Lógica';
+      paragraph(section('NODOS'), 'Selecciona un nodo del grafo para editarlo o añade uno desde el panel izquierdo.');
+      return;
+    }
     const host = section('ESCENA');
     field(host,'Ancho',project.scene.width,value=>edit(()=>project.scene.width=Math.max(64,Math.min(4096,value))),'number');
     field(host,'Alto',project.scene.height,value=>edit(()=>project.scene.height=Math.max(64,Math.min(4096,value))),'number');
@@ -186,18 +195,67 @@ function draw() {
   ctx.restore();
 }
 function fit() {
+  if (mode === 'logic') { $('#logicView').scrollTo(0, 0); return; }
+  if (mode !== 'scene') return;
   const available=$('#sceneView').getBoundingClientRect();
   const scale=Math.max(.01,Math.min((available.width-48)/project.scene.width,(available.height-48)/project.scene.height));
   canvas.style.width=project.scene.width*scale+'px';canvas.style.height=project.scene.height*scale+'px';
-  if(mode==='logic') {const graph=$('#logicView');graph.scrollTo(0,0);}
+}
+function ensureMapLoaded() {
+  if (mapLoaded) return;
+  mapLoaded = true;
+  $('#mapLoading').hidden = false;
+  $('#mapEditor').src = 'build/tilemap-editor.html?embed=1&project=' + encodeURIComponent(project.id);
+  mapLoadTimer = setTimeout(() => {
+    if (!mapReady) $('#mapLoading').replaceChildren('El mapa tardó demasiado en abrirse. Recarga el editor para intentarlo de nuevo.');
+  }, 12000);
+}
+function flushMap() {
+  if (!mapLoaded || !mapReady) return Promise.resolve(true);
+  if (mapFlushPending) return mapFlushPending.promise;
+  let resolve;
+  const promise = new Promise(done => { resolve = done; });
+  const timer = setTimeout(() => entry.finish(false), 7000);
+  const entry = {promise, finish(ok) {
+    if (mapFlushPending !== entry) return;
+    clearTimeout(timer); mapFlushPending = null; resolve(ok);
+  }};
+  mapFlushPending = entry;
+  try { $('#mapEditor').contentWindow.postMessage({type:'builda-map-flush',project:project.id},'*'); }
+  catch { entry.finish(false); }
+  return promise;
+}
+async function switchMode(next) {
+  if (next === mode) return;
+  const request = ++viewRequest;
+  if (mode === 'map' && !await flushMap()) { notify('No se pudo guardar el mapa. Sigue en Mapa e inténtalo otra vez.'); return; }
+  if (request !== viewRequest) return;
+  setMode(next);
 }
 function setMode(next) {
+  if (running && next === 'map') { notify('Detén la prueba para volver al mapa.'); return; }
   mode=next;pending=null;
-  document.querySelectorAll('[data-mode]').forEach(b=>b.classList.toggle('active',b.dataset.mode===mode));
+  const selectedNode=project.nodes.find(node=>node.id===selected);
+  if ((mode==='scene'&&selectedNode&&!isObject(selectedNode))||(mode==='logic'&&selectedNode&&isObject(selectedNode))) selected=null;
+  $('.editor-body').className='editor-body mode-'+mode;
+  document.querySelectorAll('[data-mode]').forEach(b=>{const active=b.dataset.mode===mode;b.classList.toggle('active',active);b.setAttribute('aria-pressed',String(active));});
+  // El canvas del mapa debe conservar su tamaño al cambiar de vista.
+  $('#mapView').classList.toggle('inactive',mode!=='map');
+  $('#mapView').inert=mode!=='map';
+  $('#mapView').setAttribute('aria-hidden',String(mode!=='map'));
   for(const view of ['scene','logic','assets']) $('#'+view+'View').hidden=view!==mode;
-  $('#stageLabel').textContent={scene:running?'Vista de juego':'Escena principal',logic:'Lógica de la escena',assets:'Recursos'}[mode];
-  $('#viewHelp').textContent=running?'Esc para detener · Los cambios de ejecución no se guardan':{scene:'Arrastra para mover · Supr para eliminar',logic:'Salida → entrada · Clic en una línea para quitarla',assets:'PNG, JPEG o WebP · Hasta 2 MB por imagen'}[mode];
-  $('#fit').hidden=mode==='assets';fit();draw();graph();assets();
+  $('#stageLabel').textContent={map:'Mapa del proyecto',scene:running?'Vista de juego':'Escena principal',logic:'Lógica visual',assets:'Recursos'}[mode];
+  $('#stageDescription').textContent={map:'Pinta y organiza las capas',scene:'Objetos y cámara de la escena',logic:'Eventos y acciones conectados',assets:'Imágenes del proyecto'}[mode];
+  $('#viewHelp').textContent=running?'Esc para detener · La prueba no modifica el proyecto':{map:'El mapa se guarda aquí · La vista de juego todavía no lo dibuja',scene:'Arrastra objetos · Supr para eliminar',logic:'Conecta salida con entrada · Clic en una línea para quitarla',assets:'PNG, JPEG o WebP · Hasta 2 MB por imagen'}[mode];
+  $('#fit').hidden=mode==='assets'||mode==='map';
+  $('#stageAdd').textContent=mode==='logic'?'+ Añadir nodo':'+ Añadir objeto';
+  $('#nodeSearch').placeholder=mode==='logic'?'Buscar nodos de lógica':'Buscar objetos';
+  $('#nodeSearch').setAttribute('aria-label',$('#nodeSearch').placeholder);
+  $('#treeTitle').textContent=mode==='logic'?'NODOS DEL GRAFO':'OBJETOS DE ESCENA';
+  $('#selectScene').hidden=mode==='logic';
+  if(mode==='scene')showPanel('scene');else if(mode==='logic')showPanel('nodes');
+  if(mode==='map')ensureMapLoaded();
+  refresh();
 }
 function graph() {
   const host=$('#graphNodes');host.replaceChildren();
@@ -264,7 +322,8 @@ document.addEventListener('pointerup',event=>{
 function wires() {
   const svg=$('#wires');svg.replaceChildren();
   const world=$('#graphWorld');if(mode!=='logic'||!world)return;
-  let maxX=1600,maxY=1100;$('#graphNodes').querySelectorAll('.graph-node').forEach(n=>{maxX=Math.max(maxX,n.offsetLeft+260);maxY=Math.max(maxY,n.offsetTop+180);});
+  let maxX=$('#logicView').clientWidth,maxY=$('#logicView').clientHeight;
+  $('#graphNodes').querySelectorAll('.graph-node').forEach(n=>{maxX=Math.max(maxX,n.offsetLeft+260);maxY=Math.max(maxY,n.offsetTop+180);});
   world.style.width=maxX+'px';world.style.height=maxY+'px';
   const bounds=world.getBoundingClientRect();
   function point(node,direction,port) {
@@ -299,22 +358,27 @@ function assets() {
 }
 function refresh() {
   $('#projectName').textContent=project.name;document.title=project.name+' · Asternal Editor';
-  const objects=project.nodes.filter(isObject).length,connections=project.connections.length;
-  $('#nodeStatus').textContent=objects+(objects===1?' objeto':' objetos')+' · '+connections+(connections===1?' conexión':' conexiones');
+  const objects=project.nodes.filter(isObject).length,logicNodes=project.nodes.length-objects,connections=project.connections.length;
+  $('#nodeStatus').textContent=mode==='map'?'Mapa del proyecto':mode==='assets'?project.assets.length+(project.assets.length===1?' imagen':' imágenes'):mode==='logic'?logicNodes+(logicNodes===1?' nodo de lógica':' nodos de lógica')+' · '+connections+(connections===1?' conexión':' conexiones'):objects+(objects===1?' objeto':' objetos');
   $('#undo').disabled=running||!undo.length;$('#redo').disabled=running||!redo.length;
   tree();library();inspector();graph();assets();fit();draw();
 }
+function runState(active) {
+  $('#runLabel').textContent=active?'Detener':'Probar escena';
+  $('#runIcon').innerHTML=active?'<rect x="6" y="6" width="12" height="12" rx="1"/>':'<path d="m8 5 11 7-11 7z"/>';
+}
 function stop() {
-  running=false;preview=null;cancelAnimationFrame(frame);$('#runButton').textContent='▶ Ejecutar';
-  $('.editor-shell').classList.remove('running');$('#mapTool').disabled=false;setMode('scene');refresh();
+  running=false;preview=null;cancelAnimationFrame(frame);runState(false);
+  $('.editor-shell').classList.remove('running');setMode('scene');
 }
 async function start() {
   if(running){stop();return;}
+  if(mode==='map'&&!await flushMap()){notify('Guarda el mapa antes de probar la escena.');return;}
   const errors=BuildaPreview.validate(project);if(errors.length){notify(errors.join(' '));return;}
   if(dirty&&!await saveQueue)return;
   preview=copy(project);running=true;BuildaPreview.dispatch(preview,'on-start',1/60);
-  $('#runButton').textContent='■ Detener';$('.editor-shell').classList.add('running');$('#mapTool').disabled=true;
-  setMode('scene');refresh();lastTime=performance.now();
+  runState(true);$('.editor-shell').classList.add('running');
+  setMode('scene');lastTime=performance.now();
   const tick=time=>{if(!running)return;const dt=Math.min((time-lastTime)/1000,.05);lastTime=time;
     try{BuildaPreview.dispatch(preview,'on-update',dt);draw();frame=requestAnimationFrame(tick);}
     catch(error){stop();notify(error.message);}
@@ -335,8 +399,12 @@ canvas.onpointerdown=event=>{
 };
 $('#nodeSearch').oninput=library;
 document.querySelectorAll('[data-panel]').forEach(b=>b.onclick=()=>showPanel(b.dataset.panel));
-document.querySelectorAll('[data-mode]').forEach(b=>b.onclick=()=>setMode(b.dataset.mode));
+document.querySelectorAll('[data-mode]').forEach(b=>b.onclick=()=>switchMode(b.dataset.mode));
 $('#addEntity').onclick=()=>showPanel('nodes');
+$('#stageAdd').onclick=()=>{
+  showPanel('nodes');
+  if(window.innerWidth<=700) $('.left-panel').scrollIntoView({behavior:'smooth',block:'start'});
+};
 $('#selectScene').onclick=()=>{selected=null;refresh();};
 $('#undo').onclick=()=>history(undo,redo);$('#redo').onclick=()=>history(redo,undo);$('#fit').onclick=fit;
 $('#runButton').onclick=start;
@@ -355,34 +423,43 @@ $('#cancelRename').onclick=()=>$('#nameDialog').close();
 $('#nameForm').onsubmit=async event=>{event.preventDefault();const name=$('#renameInput').value.trim();if(!name)return;
   edit(()=>project.name=name);await saveQueue;if(!dirty)$('#nameDialog').close();else $('#nameError').textContent='No se pudo guardar el nombre.';
 };
-$('#mapTool').onclick=()=>{if(running)return;mapReady=false;$('#mapEditor').src='build/tilemap-editor.html?embed=1&project='+encodeURIComponent(project.id);$('#mapDialog').showModal();};
-function closeMap() { if(!mapReady){$('#mapDialog').close();return;} $('#mapEditor').contentWindow.postMessage({type:'builda-map-flush',project:project.id},'*'); }
-$('#closeMap').onclick=closeMap;
-$('#mapDialog').addEventListener('cancel',event=>{event.preventDefault();closeMap();});
-$('#mapDialog').addEventListener('close',()=>{$('#mapEditor').src='about:blank';});
+$('.editor-brand .back').addEventListener('click',async event=>{
+  const destination=event.currentTarget.href;
+  event.preventDefault();
+  if(mode==='map'&&!await flushMap()){notify('El mapa no se pudo guardar. Sigue en Mapa e inténtalo otra vez.');return;}
+  await saveQueue;
+  if(dirty){notify('Hay cambios sin guardar. Revisa el almacenamiento antes de salir.');return;}
+  location.assign(destination);
+});
 window.addEventListener('message',async event=>{
   if(event.source!==$('#mapEditor').contentWindow||event.data?.project!==project.id)return;
-  if(event.data.type==='builda-map-ready')mapReady=true;
+  if(event.data.type==='builda-map-ready'){
+    mapReady=true;clearTimeout(mapLoadTimer);$('#mapLoading').hidden=true;
+  }
   if(event.data.type==='builda-map-request') {
     event.source.postMessage({type:'builda-map-load',project:project.id,text:project.tilemap||null},'*');
   }
   if(event.data.type==='builda-map-save'&&(typeof event.data.text==='string'||event.data.text===null)) {
-    if(event.data.text!==project.tilemap)edit(()=>project.tilemap=event.data.text);
+    if(event.data.text!==project.tilemap){project.tilemap=event.data.text;save();}
     await saveQueue;
     event.source.postMessage({type:'builda-map-saved',project:project.id,ok:!dirty},'*');
-    if(event.data.close&&!dirty)$('#mapDialog').close();
+    if(event.data.close)mapFlushPending?.finish(!dirty);
   }
 });
 window.addEventListener('keydown',event=>{
   if(event.target.closest('input,textarea,select')||document.querySelector('dialog[open]'))return;
   if(running){if(event.key==='Escape')stop();else if(!event.repeat){BuildaPreview.dispatch(preview,'on-input',1/60,event.code);draw();}return;}
+  if(mode==='map'){
+    if((event.ctrlKey||event.metaKey)&&event.key.toLowerCase()==='s'){event.preventDefault();flushMap();}
+    return;
+  }
   if((event.ctrlKey||event.metaKey)&&event.key.toLowerCase()==='s'){event.preventDefault();save();}
   if((event.ctrlKey||event.metaKey)&&event.key.toLowerCase()==='z'){event.preventDefault();event.shiftKey?history(redo,undo):history(undo,redo);}
-  if(event.key==='Delete'||event.key==='Backspace'){event.preventDefault();removeSelected();}
-  if(event.key.toLowerCase()==='f')fit();
+  if((mode==='scene'||mode==='logic')&&(event.key==='Delete'||event.key==='Backspace')){event.preventDefault();removeSelected();}
+  if((mode==='scene'||mode==='logic')&&event.key.toLowerCase()==='f')fit();
 });
 window.addEventListener('beforeunload',event=>{if(dirty){event.preventDefault();event.returnValue='';}});
 window.addEventListener('builda-storage-changed',async()=>{await saveQueue;try{const latest=await store.get(id);if(!latest||latest.revision!==project.revision)blocked('Este proyecto cambió o se eliminó en otra pestaña. Vuelve a Proyectos para abrir su versión actual.');}catch(error){blocked(error.message);}});
 new ResizeObserver(()=>{fit();wires();}).observe($('#stage'));
-refresh();
+setMode('map');
 })();
