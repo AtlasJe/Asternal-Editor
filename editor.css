@@ -13,7 +13,7 @@ svg{width:18px;height:18px;fill:none;stroke:currentColor;stroke-width:1.7;stroke
 .editor-brand{display:flex;align-items:center;min-width:0;gap:11px}
 .back{display:grid;place-items:center;width:32px;height:32px;flex:none;color:var(--muted);text-decoration:none;border:1px solid var(--line);border-radius:7px}
 .back:hover{background:var(--hover);color:var(--text)}
-.brand-mark{display:block;width:30px;height:30px;padding:4px;flex:none;border-radius:8px;background:#e3e8e9;object-fit:contain}
+.brand-mark{display:block;width:22px;height:22px;padding:2px;flex:none;border-radius:5px;background:#e3e8e9;object-fit:contain}
 .identity{min-width:0;display:flex;flex-direction:column;gap:2px}
 .app-name{font-size:10px;line-height:1.1;font-weight:750;letter-spacing:.09em;white-space:nowrap;color:#d8dedf}
 .app-name small{margin-left:5px;color:#9da8ac;font-size:9px;font-weight:500;letter-spacing:.05em}

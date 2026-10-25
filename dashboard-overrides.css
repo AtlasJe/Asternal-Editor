@@ -18,3 +18,5 @@
 #dashboardMessage{margin:20px 7.5%;padding:14px;border:1px solid #4e5559;border-radius:7px;color:#d7dddf}
 #dashboardMessage button{margin-left:15px;background:transparent;color:inherit;border:0;text-decoration:underline;cursor:pointer}
 button:focus-visible,a:focus-visible{outline:2px solid #c3c9cc;outline-offset:3px}
+
+.engine-status>.release-mark{width:16px;height:16px;display:block;object-fit:contain;padding:2px;border:0;border-radius:4px;background:#dce1e2!important}
